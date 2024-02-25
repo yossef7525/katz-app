@@ -1,0 +1,89 @@
+<div class="m-5">
+  <div class="users-filters">
+    <p>באפשרותך לסנן לפי נתמך, השתמש במסננים שלפניך:</p>
+
+    <div class="flex gap-3 items-center">
+      <app-users-selector
+        (changeUsers)="onChangeUsersFilter($event)"
+      ></app-users-selector>
+      <button
+        nz-button
+        nzType="primary"
+        class="w-fit my-5"
+        (click)="openPeopleModal()"
+      >
+        הוסף איש קשר
+      </button>
+      <button
+        nz-button
+        nzType="primary"
+        class="w-fit my-5"
+        (click)="exportToExcel()"
+      >
+        ייצא לאקסל
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <nz-table
+      #table
+      class="users-table"
+      [nzScroll]="{ x: '1000px', y: null }"
+      [nzData]="this.peoples()"
+      [nzTotal]="this.peopleService.total"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="true"
+      [nzShowSizeChanger]="true"
+      nzPaginationPosition="bottom"
+      [nzShowQuickJumper]="false"
+      [nzSimple]="false"
+      [nzOuterBordered]="true"
+      nzTableLayout="fixed"
+      [nzBordered]="false"
+      [nzLoading]="!peoples()"
+      [nzShowTotal]="totalTemplate"
+      nzSize="middle"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)"
+    >
+      <ng-template #totalTemplate let-total>
+        {{ pageSize }}/{{ total }}
+      </ng-template>
+
+      <thead>
+        <tr>
+          <th nzWidth="40px" nzColumnKey="displayName">✅</th>
+          <th nzColumnKey="displayName">שם מלא</th>
+          <th nzColumnKey="phone">טלפון</th>
+          <th nzColumnKey="phone2">טלפון 2</th>
+          <th nzColumnKey="address">כתובת</th>
+          <th nzColumnKey="floor">קומה</th>
+          <th nzColumnKey="children">ילדים בבית</th>
+          <th nzColumnKey="poultry">עופות</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let data of table.data; let i = index">
+          <tr (click)="openPeopleModalEditMode(data)">
+            <td
+          nzWidth="40px"
+          nzAlign="center"
+          [nzChecked]="data.active ?? false"
+          [nzDisabled]="false"
+          (nzCheckedChange)="setActiveUser($event, i)"
+        ></td>
+            <td>{{ data.lastName }} {{ data.firstName }}</td>
+            <td>{{ data.phones && data.phones[0] ? data.phones[0] : "" }}</td>
+            <td>{{ data.phones && data.phones[1] ? data.phones[1] : "" }}</td>
+            <td>{{ data.address }} {{ data.building }}/{{ data.apartment }}</td>
+            <td>{{ data.floor }}</td>
+            <td>{{ data.children }}</td>
+            <td>{{ data.poultry }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

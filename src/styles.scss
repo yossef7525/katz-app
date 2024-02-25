@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'styles/iconsax.css';
+// @import 'styles/normalize.css';
+@import 'styles/fonts.scss';
+@import 'styles/design.scss';
+body{
+    max-height: 100vh;
+    overflow: hidden;
+}
+*{
+    font-family: almoni;
+}
+button{
+    font-family: almoni !important;
+}
+p{
+    margin-bottom: 0 !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

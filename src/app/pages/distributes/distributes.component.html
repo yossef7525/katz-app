@@ -1,0 +1,76 @@
+<nz-spin [nzSpinning]="loading">
+<div class="p-5 text-center">
+    <div class="text-center relative">
+        <p class="ymi-h2-a text-slate-700 shadow-inner">רשימת חלוקות</p>
+        <div class="w-fit absolute top-5 left-5">
+            <button nz-button nzType="primary"  (click)="createTplModal(title, form)">צור חלוקה חדשה</button>
+        </div>
+      </div>
+    <nz-divider nzText="חלוקות פעילות">
+    </nz-divider>
+        <div class="flex gap-5 flex-wrap">
+            <div *ngFor="let row of distributesActive; let i = index">
+                <nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis, actionDelete]">
+                    <nz-card-meta
+                      nzTitle="{{row.name}}"
+                      nzDescription="חלוקה זו עדיין פעילה"
+                    ></nz-card-meta>
+                  </nz-card>
+                  
+                  <ng-template #coverTemplate>
+                    <img alt="example" src="assets/logo.webp" />
+                  </ng-template>
+                  <ng-template #actionSetting>
+                    <span nz-icon nzType="setting" nz-tooltip="הגדרות ונתוני חלוקה"></span>
+                  </ng-template>
+                  <ng-template #actionEdit>
+                    <span nz-icon nzType="edit" nz-tooltip="שנה שם חלוקה"></span>
+                  </ng-template>
+                  <ng-template #actionEllipsis>
+                    <span nz-icon nzType="lock" (click)="confrimeMove(row.id)" nz-tooltip="סגור חלוקה והעבר לארכיון"></span>
+                  </ng-template>
+                  <ng-template #actionDelete>
+                    <span nz-icon nzType="delete" nz-tooltip="מחק חלוקה"></span>
+                  </ng-template>
+            </div>
+        </div>
+    <nz-divider nzText="חלוקות שהסתיימו">
+
+    </nz-divider>
+    
+    <div class="flex gap-5 flex-wrap">
+        <div *ngFor="let row of distributesArchive; let i = index">
+            <nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionDelete]">
+                <nz-card-meta
+                  nzTitle="{{row.name}}"
+                  nzDescription="חלוקה זו הסתיימה"
+                ></nz-card-meta>
+              </nz-card>
+              
+              <ng-template #coverTemplate>
+                <img alt="example" src="assets/logo.webp" />
+              </ng-template>
+              <ng-template #actionSetting>
+                <span nz-icon nzType="setting" nz-tooltip="הגדרות ונתוני חלוקה"></span>
+              </ng-template>
+              <ng-template #actionEdit>
+                <span nz-icon nzType="edit" nz-tooltip="שנה שם חלוקה"></span>
+              </ng-template>
+              <ng-template #actionDelete>
+                <span nz-icon nzType="delete" nz-tooltip="מחק חלוקה"></span>
+              </ng-template>
+        </div>
+    </div>
+
+    <ng-template #title>
+        <p class="ymi-h2-a text-slate-700">הוסף חלוקה</p>
+        <p class="ymi-p-a text-slate-700 my-3">שים לב: <br> ביצירת חלוקה חדשה, המערכת תיצור אוטומטית משלוח עבור כל נתמך פעיל.</p>
+    </ng-template>
+    <ng-template #form>
+        <input type="text" [(ngModel)]="name" nz-input placeholder="הזן שם חלוקה (לדוגמא: חודש שבט)">
+        <div class="my-5 text-left">
+            <button nz-button nzType="primary" [nzLoading]="loading" (click)="create()">צור</button>
+        </div>
+    </ng-template>
+</div>
+</nz-spin>

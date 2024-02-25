@@ -1,0 +1,69 @@
+<form nz-form *ngIf="form && (!nzModalData || nzModalData.deliverie.status.length < 4)" [formGroup]="form" class="ant-advanced-search-form" >
+    <div >
+      <div  >
+        <nz-divider nzText="שנה סטטוס משלוח"></nz-divider>
+
+        <!-- <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="f-name">עבור נתמך</nz-form-label>
+          <nz-form-control class="text-left">
+            <app-users-selector (changeUsers)="onChangeUserSelector($event)"></app-users-selector>
+          </nz-form-control>
+        </nz-form-item> -->
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="l-name">סטטוס</nz-form-label>
+          <nz-form-control class="text-left">
+            <nz-radio-group formControlName="status">
+              <label nz-radio-button nzValue="נקלט">נקלט</label>
+              <label nz-radio-button nzValue="יצא מהמחסן">יצא מהמחסן</label>
+              <label nz-radio-button nzValue="הגיע לבנין">הגיע לבנין</label>
+              <label nz-radio-button nzValue="הגיע לדירה">הגיע לדירה</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+       
+      </div>
+    </div>
+    <div class="text-center">
+      <button nz-button nzType="primary" class="w-fit m-auto" (click)="submit()">שמור משלוח</button>
+    </div>
+  </form>
+  <nz-divider *ngIf="!nzModalData"  nzText="או ייבא מאקסל"></nz-divider>
+  <div *ngIf="!nzModalData" class="text-center my-3">
+   <input  type="file" (change)="onFileChange($event)" multiple="false">
+  </div>
+  <nz-divider *ngIf="nzModalData" [nzText]="'עדכונים קודמים'"></nz-divider>
+  <app-status-table [data]="this.nzModalData.deliverie.status"></app-status-table>
+  <!-- <nz-table *ngIf="nzModalData"
+  #table
+  class="users-table"
+  [nzScroll]="{ x: '400px', y: null }"
+  [nzData]="this.nzModalData.deliverie.status"
+  [nzFrontPagination]="false"
+  [nzShowPagination]="true"
+  [nzShowSizeChanger]="true"
+  nzPaginationPosition="bottom"
+  [nzShowQuickJumper]="false"
+  [nzSimple]="false"
+  [nzOuterBordered]="true"
+  nzTableLayout="fixed"
+  [nzBordered]="false"
+  nzSize="middle"
+  >
+
+  <thead>
+    <tr>
+      <th  nzColumnKey="displayName" >סטטוס</th>
+      <th nzColumnKey="phone">עודכן ב-</th>
+      <th nzColumnKey="children">עודכן ע"י</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of table.data; let i = index" >
+      <tr >
+        <td >{{ data.status }}</td>
+        <td >{{ data.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+        <td >{{ data.updatePhone}}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table> -->

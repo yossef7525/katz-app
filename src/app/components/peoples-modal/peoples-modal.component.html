@@ -1,0 +1,183 @@
+<form nz-form *ngIf="form" [formGroup]="form" class="ant-advanced-search-form">
+    <div >
+      <div  >
+        <nz-divider nzText="פרטים אישיים"></nz-divider>
+
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="f-name">שם פרטי</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+              nz-input
+              placeholder="הזן שם פרטי"
+              formControlName="firstName"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="l-name">שם משפחה</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+              nz-input
+              placeholder="הזן שם משפחה"
+              formControlName="lastName"
+              [attr.id]="'l-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-divider nzText="פרטי מגורים"></nz-divider>
+
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">שכונה</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="neighborhood"
+              nz-input
+              placeholder="שכונה"
+              formControlName="neighborhood"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">כתובת</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="כתובת"
+              formControlName="address"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">בנין</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="מספר בנין"
+              formControlName="building"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">דירה</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="מספר דירה"
+              formControlName="apartment"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">קומה</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="קומה"
+              formControlName="floor"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-divider nzText="יצירת קשר"></nz-divider>
+
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">טלפון</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="טלפון"
+              formControlName="phone"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">טלפון 2</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="טלפון 2"
+              formControlName="phone2"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">טלפון 3</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="טלפון 3"
+              formControlName="phone3"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-divider nzText="פרטי תמיכה"></nz-divider>
+
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">ילדים בבית</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="כמות ילדים בבית"
+              formControlName="children"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">עופות</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="מספר עופות"
+              formControlName="poultry"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">כשרות</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="כשרות"
+              formControlName="cosher"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <nz-divider *ngIf="nzModalData"  nzText="משלוחים פעילים">
+    </nz-divider>
+    <div *ngFor="let del of nzModalData.people.deliveries">
+   <app-status-table [data]="del.status"></app-status-table>
+    </div>
+    
+    
+    
+    <nz-divider *ngIf="!nzModalData"  nzText="או ייבא מאקסל"></nz-divider>
+  <div *ngIf="!nzModalData" class="text-center my-3">
+   <input  type="file" (change)="onFileChange($event)" multiple="false">
+  </div>
+  </form>
+  <div class="text-center">
+    <button nz-button nzType="primary" class="w-fit m-auto" (click)="submit()">שמור איש קשר</button>
+  </div>

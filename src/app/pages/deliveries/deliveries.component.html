@@ -1,0 +1,108 @@
+<div class="m-5">
+  <div class="users-filters">
+    <p>
+      באפשרותך לסנן משלוחים לפי נתמך, או לפי מספר משלוח, השתמש במסננים שלפניך:
+    </p>
+<div class="flex items-center gap-3 w-[650px]">
+
+  <app-users-selector
+  (changeUsers)="onChangeUsersFilter($event)"
+  ></app-users-selector>
+  <input 
+  class="w-fit m-auto my-5"
+       type="text" nz-input placeholder="חפש לפי מספר משלוח" #deliveriyId>
+    <button
+      nz-button
+      nzType="primary"
+      class="w-fit m-auto my-5"
+      (click)="onChangeQueryFilter(deliveriyId.value)"
+      >
+      חיפוש
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      class="w-fit m-auto my-5"
+      (click)="exportToExcel()"
+      >
+      יצוא מדבקות
+    </button>
+  </div>
+</div>
+
+  <div>
+    <nz-table
+      #table
+      class="users-table"
+      [nzScroll]="{ x: '1000px', y: null }"
+      [nzData]="this.deliveriesService.deliveries"
+      [nzTotal]="this.deliveriesService.total"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="true"
+      [nzShowSizeChanger]="true"
+      nzPaginationPosition="bottom"
+      [nzShowQuickJumper]="false"
+      [nzSimple]="false"
+      [nzOuterBordered]="true"
+      nzTableLayout="fixed"
+      [nzBordered]="false"
+      [nzLoading]="this.loading"
+      [nzShowTotal]="totalTemplate"
+      nzSize="middle"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)"
+    >
+      <ng-template #totalTemplate let-total>
+        {{ pageSize }}/{{ total }}
+      </ng-template>
+
+      <thead>
+        <tr>
+          <th nzColumnKey="displayName">קוד משלוח</th>
+          <th nzColumnKey="phone">עבור</th>
+          <th nzColumnKey="phone2" [nzWidth]="'400px'">סטטוס</th>
+          <th nzColumnKey="address">כמות עופות</th>
+          <th nzColumnKey="floor">עדכון אחרון</th>
+          <th nzColumnKey="children">טלפון מעדכן</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let data of table.data; let i = index">
+          <tr (click)="update(data)">
+            <td>{{ data.id }}</td>
+            <!-- <td>{{ data.peopleId || "" | UserName | async }}</td> -->
+            <td>{{ data.people?.firstName }} {{data.people?.lastName }}</td>
+            <td>
+              <ng-container *ngFor="let item of data.status; let i = index">
+                <nz-tag
+                  *ngIf="item.status === statusesList.Absorbed"
+                  [nzColor]="'magenta'"
+                  >{{ item.status }}</nz-tag
+                >
+                <nz-tag
+                  *ngIf="item.status === statusesList.Out"
+                  [nzColor]="'cyan'"
+                  >{{ item.status }}</nz-tag
+                >
+                <nz-tag
+                  *ngIf="item.status === statusesList.Building"
+                  [nzColor]="'geekblue'"
+                  >{{ item.status }}</nz-tag
+                >
+                <nz-tag
+                  *ngIf="item.status === statusesList.Delivered"
+                  [nzColor]="'purple'"
+                  >{{ item.status }}</nz-tag
+                >
+              </ng-container>
+            </td>
+            <td>{{ data.count }}</td>
+            <td>{{ data.updatedAt | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td>{{ data.updatePhone }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

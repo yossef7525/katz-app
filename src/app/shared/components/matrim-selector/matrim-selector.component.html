@@ -1,0 +1,9 @@
+<nz-select
+nzMode="multiple"
+nzPlaceHolder="בחר מתרים"
+[(ngModel)]="selected"
+(ngModelChange)="onChangeSelected()"
+style="width: 300px;"
+>
+    <nz-option *ngFor="let matrim of matrimim" nzValue="{{matrim.id}}" nzLabel="{{matrim.firstName}} {{matrim.lastName}}"></nz-option>
+</nz-select>

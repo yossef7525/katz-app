@@ -1,0 +1,29 @@
+@layer {
+  .ymi-h1-l {
+    @apply levi text-[40px] lg:text-[50px] font-bold leading-[1em] lg:leading-[0.9em];
+  }
+  .ymi-h1-a {
+    @apply almoni text-[40px] lg:text-[50] font-bold;
+  }
+  .ymi-h2-l {
+    @apply levi text-[25px] lg:text-[30px] font-bold leading-[1em];
+  }
+  .ymi-h2-a {
+    @apply almoni text-[25px] lg:text-[30px] font-bold ;
+  }
+  .ymi-h3-l {
+    @apply levi text-[16px] lg:text-[18px] font-bold leading-[1.1em] lg:leading-[1.2em];
+  }
+  .ymi-h3-a {
+    @apply almoni text-[16px] lg:text-[18px] font-bold leading-[1.3em] lg:leading-[1.2em];
+  }
+  .ymi-h4-a {
+    @apply almoni text-[13px] lg:text-[15px] leading-[1.3em];
+  }
+  .ymi-p-a {
+    @apply almoni text-[16px] lg:text-[18px] leading-[1.3em] font-normal;
+  }
+  .ymi-p-l {
+    @apply levi text-[16px] lg:text-[18px] leading-[1.3em];
+  }
+}

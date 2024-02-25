@@ -1,0 +1,46 @@
+<nz-layout class="admin-page h-full" nzTheme="light">
+    <nz-sider class="shadow-[0px_18px_24px_0px_#0C4C4012]" nzCollapsible [(nzCollapsed)]="isCollapsed" nzTheme="light" [nzTrigger]="null">
+        <div class="logo">
+            <img src="assets/logo.webp" width="100" class="m-auto" alt="" srcset="">
+          </div>
+      <ul class="admin-menu" nz-menu nzTheme="light" nzMode="inline">
+        <li nz-menu-item routerLink="peoples">
+          <i nz-icon nzType="user"></i>
+          <span>נתמכים</span>
+        </li>
+        <li nz-menu-item routerLink="distributes">
+          <i nz-icon nzType="tag"></i>
+          <span>חלוקות</span>
+        </li>
+        <li nz-menu-item routerLink="deliveries">
+          <i nz-icon nzType="tag"></i>
+          <span>משלוחים</span>
+        </li>
+        <li nz-menu-item routerLink="sorted">
+          <i nz-icon nzType="tag"></i>
+          <span>מיון כתובות</span>
+        </li>
+         <li nz-menu-item routerLink="/login-page">
+          <i nz-icon nzType="logout"></i>
+          <span>התנתק</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout class="header-and-content bg-white" nzTheme="light">
+      <nz-header nzTheme="light" class="bg-white shadow-[0px_18px_24px_0px_#0C4C4012]">
+        <div class="flex justify-center items-center p-5">
+        <p class="text-2xl text-slate-700 font-bold">פרוייקט להשביע - שע"י קופת גומלי חסד</p>
+      </div>
+      </nz-header>
+      <nz-content>
+        <div class="content overflow-scroll h-[100%]">
+          <ng-content></ng-content>
+        </div>
+      </nz-content>
+      <nz-footer class="bg-white shadow-[0px_18px_24px_0px_#0C4C4012] text-center">
+        <app-counter></app-counter>
+        
+      </nz-footer>
+    </nz-layout>
+  </nz-layout>
+  

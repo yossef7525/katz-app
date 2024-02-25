@@ -1,0 +1,19 @@
+<div class="picker my-5">
+    <nz-form-item class="date">
+      <!-- <nz-form-label>סינון שנתי</nz-form-label> -->
+      <nz-form-control>
+        <div class="my-2" style="margin-top: 10px; margin-bottom: 10px;">
+          <nz-radio-group [(ngModel)]="dateSelectControl" (ngModelChange)="dateSelectChange($event)">
+            <label nz-radio-button nzValue="2024">2024</label>
+            <label nz-radio-button nzValue="2023">2023</label>
+            <label nz-radio-button nzValue="2022">2022</label>
+            <label nz-radio-button nzValue="2021">2021</label>
+            <label nz-radio-button nzValue="2020">2020</label>
+            <label nz-radio-button nzValue="2019">2019</label>
+            <label nz-radio-button nzValue="2018">2018</label>
+          </nz-radio-group>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  

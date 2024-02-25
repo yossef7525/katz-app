@@ -1,0 +1,15 @@
+<div style="padding: 20px;">
+  <button nz-button nzType="primary" nzSize="default" (click)="openAddModal()">הוסף משתמש חדש</button>
+
+    <div  style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+        
+        <nz-card *ngFor="let item of list" nzTitle="{{item.name}}" [nzExtra]="roles" style="width: 300px;">
+            <p>כניסה אחרונה למערכת:</p>
+            <p>{{item.lastLogin | date:'dd/MM/yyyy HH:mm'}}</p>
+            <ng-template #roles>
+                <nz-tag *ngFor="let role of item.roles" [nzColor]="'magenta'">{{role}}</nz-tag>
+            </ng-template>
+        </nz-card>
+
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<form nz-form *ngIf="form"  [formGroup]="form">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="name">שם</nz-form-label>
+      <nz-form-control  [nzSpan]="14">
+        <input nz-input formControlName="name" name="name" type="text" id="name">
+      </nz-form-control>
+    </nz-form-item >
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="percent">סיסמא</nz-form-label>
+      <nz-form-control  [nzSpan]="14">
+        <input nz-input formControlName="password" name="percent" type="text" id="percent">
+      </nz-form-control>
+    </nz-form-item >
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" >הרשאות</nz-form-label>
+      <nz-form-control  [nzSpan]="14">
+        <nz-select  nzMode="multiple" formControlName="roles">
+          <nz-option nzLabel="User" nzValue="user"></nz-option>
+          <nz-option nzLabel="Admin" nzValue="admin"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item >
+
+    <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="submit()">
+        הוסף
+      </button>
+
+  </form>

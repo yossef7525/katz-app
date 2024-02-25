@@ -1,0 +1,42 @@
+// -------- import official less file -----------
+@import '~node_modules/ng-zorro-antd/ng-zorro-antd.less';
+
+// -------- override less variables -----------
+@primary-color: #25b99e;
+@highlight-color: @primary-color;
+
+@border-radius-base: 6px;
+
+// Badge
+// ---
+@badge-height: 22px;
+@badge-font-weight: 100;
+@badge-color: #25b99e;
+@processing-color: rgb(34, 183, 0);
+// @badge-height-sm: 14px;
+// @badge-dot-size: 6px;
+// @badge-font-size: @font-size-sm;
+// @badge-font-size-sm: @font-size-sm;
+// @badge-status-size: 6px;
+// @badge-text-color: @component-background;
+
+html {
+  --scrollbarBG: #f3f3f3;
+  --thumbBG: #c4c9c8;
+}
+*::-webkit-scrollbar {
+  width: 11px;
+}
+* {
+  //   scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+*::-webkit-scrollbar-thumb {
+  width: 11px;
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}

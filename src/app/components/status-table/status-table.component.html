@@ -1,0 +1,34 @@
+<nz-table *ngIf="data"
+#table
+class="users-table"
+[nzScroll]="{ x: '400px', y: null }"
+[nzData]="this.data"
+[nzFrontPagination]="false"
+[nzShowPagination]="true"
+[nzShowSizeChanger]="true"
+nzPaginationPosition="bottom"
+[nzShowQuickJumper]="false"
+[nzSimple]="false"
+[nzOuterBordered]="true"
+nzTableLayout="fixed"
+[nzBordered]="false"
+nzSize="middle"
+>
+
+<thead>
+  <tr>
+    <th  nzColumnKey="displayName" >סטטוס</th>
+    <th nzColumnKey="phone">עודכן ב-</th>
+    <th nzColumnKey="children">עודכן ע"י</th>
+  </tr>
+</thead>
+<tbody>
+  <ng-container *ngFor="let data of table.data; let i = index" >
+    <tr >
+      <td >{{ data.status }}</td>
+      <td >{{ data.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+      <td >{{ data.updatePhone}}</td>
+    </tr>
+  </ng-container>
+</tbody>
+</nz-table>

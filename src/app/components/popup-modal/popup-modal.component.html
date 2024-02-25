@@ -1,0 +1,8 @@
+<div class="absolute left-0 right-0 ml-auto mr-auto top-36 w-2/6 rounded-full animate-bounce transition-all ease-in-out">
+    <img alt="example" src="assets/logo.webp" class="w-28 m-auto"/>
+    <p class="ymi-h1-a text-white">משלוח חדש נמסרה</p>
+    <p class="ymi-h2-a text-white">{{delivery.peopleId | UserName | async}}</p>
+    <p class="ymi-h2-a text-white">{{delivery.count}} עופות</p>
+    <p class="ymi-h2-a text-white">עודכן ע"י {{delivery.status.at(delivery.status.length-1)?.updatePhone}}</p>
+    <p class="ymi-p-a text-white">לע"נ הרה"ק ר' ישעיה בן ר' משה זיע"א</p>
+</div>

@@ -1,0 +1,20 @@
+<div class="picker my-5">
+    <nz-form-item class="date">
+      <nz-form-label>טווח תאריכים</nz-form-label>
+      <nz-form-control>
+        <nz-range-picker dir="rtl" [(ngModel)]="dateRangeControl" (ngModelChange)="dateRangeChange($event)"></nz-range-picker>
+        <div class="my-2" style="margin-top: 10px; margin-bottom: 10px;">
+          <nz-radio-group [(ngModel)]="dateSelectControl" (ngModelChange)="dateSelectChange($event)">
+            <label nz-radio-button nzValue="1:day">יום 1</label>
+            <label nz-radio-button nzValue="2:day">2 ימים</label>
+            <label nz-radio-button nzValue="3:day">3 ימים</label>
+            <label nz-radio-button nzValue="7:day">שבוע</label>
+            <label nz-radio-button nzValue="14:day">שבועיים</label>
+            <label nz-radio-button nzValue="1:month">חודש</label>
+            <label nz-radio-button nzValue="3:month">3 חודשים</label>
+          </nz-radio-group>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  

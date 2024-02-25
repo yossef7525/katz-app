@@ -1,0 +1,19 @@
+<nz-select
+nzPlaceHolder="בחר נתמך"
+nzMode="multiple"
+[(ngModel)]="selected"
+style="width: 300px;"
+nzAllowClear
+nzShowSearch
+nzServerSearch
+(nzOnSearch)="onSearch($event)"
+(ngModelChange)="onChangeSelected()"
+>
+    <ng-container *ngFor="let user of users">
+        <nz-option *ngIf="!isLoading" nzValue="{{user.id}}" nzLabel="{{user.lastName}} {{user.firstName}}"></nz-option>
+      </ng-container>
+      <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+        <span nz-icon nzType="loading" class="loading-icon"></span>
+        Loading Data...
+      </nz-option>
+</nz-select>

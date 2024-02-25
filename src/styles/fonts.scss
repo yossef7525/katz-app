@@ -1,0 +1,83 @@
+@font-face {
+  font-family: EditorSerif;
+  src: url(../assets/fonts/EditorSerif-Semibold.woff) format('woff'),
+    url(../assets/fonts/EditorSerif-Semibold.woff2) format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: EditorSans;
+  src: url(../assets/fonts/EditorSans-Normal.woff) format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: EditorSans;
+  src: url(../assets/fonts/EditorSans-Book.woff) format('woff');
+  font-weight: 200; // TODO ?
+}
+
+@font-face {
+  font-family: EditorSans;
+  src: url(../assets/fonts/EditorSans-Medium.woff) format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Assistant;
+  src: url(../assets/fonts/Assistant-Regular.ttf) format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Assistant;
+  src: url(../assets/fonts/Assistant/Assistant-Regular.ttf) format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Assistant;
+  src: url(../assets/fonts/Assistant/Assistant-Bold.ttf) format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Assistant;
+  src: url(../assets/fonts/Assistant-SemiBold.ttf) format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Assistant;
+  src: url(../assets/fonts/Assistant/Assistant-ExtraLight.ttf) format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: Assistant;
+  src: url(../assets/fonts/Assistant/Assistant-SemiBold.ttf) format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: levi;
+  src: url(/assets/fonts/levi/webfont_files/levi-bold-aaa.woff) format('woff');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: almoni;
+  src: url(/assets/fonts/almoni/webfont_files/almoni-regular-aaa.woff) format('woff');
+  font-weight: normal;
+}
+@font-face {
+  font-family: almoni;
+  src: url(/assets/fonts/almoni/webfont_files/almoni-ultrabold-aaa.woff) format('woff');
+  font-weight: 900;
+}
+
+.almoni {
+  font-family: almoni;
+}
+.levi {
+  font-family: levi;
+}

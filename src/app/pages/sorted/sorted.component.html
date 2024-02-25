@@ -1,0 +1,25 @@
+<nz-spin [nzSpinning]="loading">
+    <p class="ymi-h1-a text-center">מערכת מיון כתובות</p>
+    <p class="ymi-p-a text-center">החזק בכתובת שברצונך למיין, וגרור אותו למיקום המתאים שלו, או הכנס מספר מיקום ולחץ "העבר", בסיום אל תשכח ללחוץ "שמירה"</p>
+    <div cdkScrollable>
+        
+        <div cdkDropList class="example-list h-[80vh] overflow-y-scroll overflow-x-hidden" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" cdkDrag *ngFor="let people of peoples; let i = index">
+                {{i}}
+                <nz-tag  [nzColor]="'magenta'">שכונה: {{people.neighborhood}}</nz-tag>
+            <nz-tag  [nzColor]="'cyan'">רחוב: {{people.address}}</nz-tag>
+            <nz-tag  [nzColor]="'geekblue'">בנין: {{people.building}}</nz-tag>
+            <nz-tag [nzColor]="'purple'">קומה: {{people.floor}}</nz-tag>
+            <nz-tag [nzColor]="'blue'">כשרות: {{people.cosher}}</nz-tag>
+            <div class="w-14">
+                <input nz-input type="number"  #iMove>
+            </div>
+            <button nz-button (click)="move(i, iMove.value)">העבר</button>
+        </div>
+    </div>
+</div>
+<div class="fixed top-5 left-5">
+    <button nz-button nzType="primary"  (click)="update()">שמירה</button>
+</div>
+
+</nz-spin>

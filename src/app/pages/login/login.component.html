@@ -1,0 +1,37 @@
+<div  style="text-align: center;">
+    <img src="assets/logo.webp" width="300" class="m-auto">
+</div>
+<nz-result *ngIf="!remult.authenticated()"  nzTitle="התחבר למערכת" nzSubTitle="כדי לצפות במידע, ולהשתמש במערכת, נדרש אימות">
+    <div nz-result-extra>
+        <form (submit)="signIn()">
+          <input
+            [(ngModel)]="signInUsername"
+            placeholder="הכנס שם משתמש"
+            name="username"
+            nz-input
+            style="width: 200px; margin-bottom: 10px;"
+          />
+          <br>
+          <input
+            [(ngModel)]="signInPassword"
+            placeholder="הכנס סיסמא"
+            name="password"
+            type="password"
+            nz-input
+            style="width: 200px; margin-bottom: 10px;"
+          />
+          <br>
+          <button nz-button nzType="primary">התחבר</button>
+        </form>
+    </div>
+  </nz-result>
+
+  <nz-result *ngIf="remult.authenticated()" nzStatus="success" nzTitle="אתה מחובר" nzSubTitle="{{ remult.user?.name }}, אתה מחובר ויכול להשתמש במערכת, בהצלחה!">
+    <div nz-result-extra>
+      <!-- <button nz-button nzType="primary" routerLink="/admin">קח אותי למערכת</button> -->
+      <!-- <button nz-button nzType="primary" routerLink="/מגבית-חירום">קח אותי למסך מגבית לפי ערים</button> -->
+      <!-- <button nz-button nzType="primary" routerLink="/מגבית-חירום-קהילות">קח אותי למסך מגבית לפי קהילות</button> -->
+      <button nz-button (click)="signOut()">התנתק</button>
+    </div>
+  </nz-result>
+
