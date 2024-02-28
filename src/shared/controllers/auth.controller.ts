@@ -1,4 +1,4 @@
-import { Allow, BackendMethod, remult } from "remult";
+import { BackendMethod, remult } from "../remult";
 import { Roles } from "../types/roles";
 import { UserRoles } from "../types/user-roles";
 import crypto from 'crypto-js'

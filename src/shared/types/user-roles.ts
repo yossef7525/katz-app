@@ -1,4 +1,4 @@
-import { Entity, Fields } from "remult";
+import { Entity, Fields } from "../remult";
 import { Roles } from "./roles";
 
 @Entity("userRoles", {

@@ -1,4 +1,4 @@
-import { Entity, Fields, Relations } from "remult";
+import { Entity, Fields, Relations } from "../remult";
 import { People } from "./people";
 
 @Entity('deliveries', {

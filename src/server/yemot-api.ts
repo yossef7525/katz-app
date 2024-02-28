@@ -70,8 +70,13 @@ YemotRouts.get('/Delivered', api.withRemult, async (req, res) => {
 async function sendNotification(shipping:Deliveries){
     const repo = remult.repo(People)
     const people = (await repo.find({where: {id: shipping.peopleId}}))[0]
-    fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
-}
+    try {
+        await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
+    } catch (error) {
+        console.log("error call to yemot!");
+        
+    }
+    }
 
 
 export default YemotRouts

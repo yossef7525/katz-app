@@ -3,7 +3,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { DistributesController } from '../../../shared/controllers/distributes.controller';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Distributes } from '../../../shared/types/distributes';
-import { remult } from 'remult';
+import { remult } from '../../../shared/remult';
 
 @Component({
   selector: 'app-distributes',
@@ -41,11 +41,9 @@ export class DistributesComponent implements OnInit {
   async create() {
     if (!this.name) return;
     this.loading = true
+    
     try {
-     const newDistributes =  await DistributesController.createDistribute({
-        name: this.name,
-        archive: false,
-      });
+     const newDistributes =  await DistributesController.addDistribute(this.name);
       this.distributesActive = [...this.distributesActive, newDistributes]
       this.loading = false
       this.messages.success('החלוקה נוצרה בהצלחה');

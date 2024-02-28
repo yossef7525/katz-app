@@ -1,7 +1,7 @@
-import { BackendMethod, remult } from 'remult';
 import { Distributes } from '../types/distributes';
 import { Deliveries, People, Statuses } from '../types';
 import { Archive } from '../types/archive';
+import { BackendMethod, remult } from '../remult';
 
 const distributesRepo = remult.repo(Distributes);
 const deliveriesRepo = remult.repo(Deliveries);
@@ -9,20 +9,21 @@ const archiveRepo = remult.repo(Archive);
 const peoplesRepo = remult.repo(People);
 
 export class DistributesController {
-  @BackendMethod({ allowed: true })
-  static async createDistribute(
-    distributes: Distributes
-  ): Promise<Distributes> {
-    const newDistributes = await distributesRepo.insert(distributes);
 
-    const peoples = await peoplesRepo.find({where: {active: true}, orderBy: {order: 'asc'}});
+  @BackendMethod({ allowed: true })
+  static async addDistribute(distributes: string): Promise<Distributes> {
+    console.log('distributesRepo: ', distributes);
+
+    const newDistributes = await distributesRepo.insert({name: distributes, archive: false});
+
+    const peoples = await peoplesRepo.find({ where: { active: true }, orderBy: { order: 'asc' } });
 
     let deliveries: Deliveries[] = [];
     peoples.forEach((p) => {
       deliveries = [
         ...deliveries,
         {
-          people:p,
+          people: p,
           peopleId: p.id,
           distributeId: `${newDistributes.id}`,
           updatePhone: 'נוצר אוטומטי',
@@ -40,6 +41,7 @@ export class DistributesController {
     await deliveriesRepo.insert(deliveries);
     return newDistributes;
   }
+
 
   @BackendMethod({ allowed: true })
   static async moveToArchive(

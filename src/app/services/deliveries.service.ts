@@ -1,7 +1,7 @@
 import { Injectable, OnInit, signal } from '@angular/core';
 import { Deliveries, People } from '../../shared/types';
-import {  remult } from 'remult';
 import { PoepleService } from './poeple.service';
+import { remult } from '../../shared/remult';
 
 @Injectable({
   providedIn: 'root'

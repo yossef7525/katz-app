@@ -167,9 +167,11 @@
     </div>
     <nz-divider *ngIf="nzModalData"  nzText="משלוחים פעילים">
     </nz-divider>
-    <div *ngFor="let del of nzModalData.people.deliveries">
-   <app-status-table [data]="del.status"></app-status-table>
-    </div>
+    <ng-container *ngIf="nzModalData">
+      <div *ngFor="let del of nzModalData.people.deliveries">
+        <app-status-table [data]="del.status"></app-status-table>
+      </div>
+    </ng-container>
     
     
     

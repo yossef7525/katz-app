@@ -28,7 +28,6 @@ export class PeoplesModalComponent implements OnInit {
   constructor(private fb: FormBuilder, private peopleService: PoepleService, private nzModal:NzModalRef, private nzMessages:NzMessageService) {}
 
   ngOnInit(): void {
-console.log(this.nzModalData.people);
 
     const {firstName, lastName, address, phones, building, floor, apartment, children, poultry, neighborhood, cosher} = this.nzModalData?.people || ''
     this.form = this.fb.group({

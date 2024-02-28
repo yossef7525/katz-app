@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { remult } from 'remult';
 
 @Component({
   selector: 'app-layout',
@@ -8,5 +7,4 @@ import { remult } from 'remult';
 })
 export class LayoutComponent {
   isCollapsed:boolean = false
-  remult = remult
 }

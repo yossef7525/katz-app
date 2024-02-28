@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { UserInfo, remult } from 'remult';
 import { UserRoles } from '../shared/types/user-roles';
 import { HttpClient } from '@angular/common/http';
+import { UserInfo, remult } from '../shared/remult';
 
 @Component({
   selector: 'app-root',

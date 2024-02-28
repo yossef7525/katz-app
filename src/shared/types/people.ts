@@ -1,4 +1,4 @@
-import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "remult";
+import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "../remult";
 import { Deliveries } from "./deliverie";
 
 @Entity("peoples", {
@@ -50,7 +50,7 @@ export class People {
     order?:number
     @Fields.boolean()
     active?:boolean
-    
+
     @Relations.toMany(() => Deliveries)
     deliveries?: Deliveries[]
     static userNameFilter = Filter.createCustom<People, {query:string}>(
