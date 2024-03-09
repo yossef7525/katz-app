@@ -1,4 +1,4 @@
-import { Entity, Fields, Relations } from "../remult";
+import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "../remult";
 import { People } from "./people";
 
 @Entity('deliveries', {
@@ -6,7 +6,7 @@ import { People } from "./people";
 })
 export class Deliveries {
     @Fields.autoIncrement()
-    id?:string
+    id!:string
 
     @Fields.string()
     peopleId!: string;
@@ -33,6 +33,13 @@ export class Deliveries {
    
     @Fields.string()
     updatePhone?:string
+
+    static statusFilter = Filter.createCustom<Deliveries, {query:Statuses}>(
+        async ({query}) => {
+        return ArrayEntityDataProvider.rawFilter((deliveries:Deliveries) => {
+         return deliveries.status.findIndex(st => st.status === query) > -1
+        })
+    });
 }
 
 

@@ -3,10 +3,9 @@ import { remult, type UserInfo } from "remult"
 import { remultExpress } from "remult/remult-express"
 import { UserRoles } from "../shared/types/user-roles"
 import crypto from 'crypto-js'
+import {api} from './api';
 
-const api = remultExpress({
-    entities: [UserRoles]
-})
+
 const validUsers = remult.repo(UserRoles)
 
 export const auth = Router()

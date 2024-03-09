@@ -1,5 +1,5 @@
 import { Injectable, OnInit, signal } from '@angular/core';
-import { Deliveries, People } from '../../shared/types';
+import { Deliveries, People, Statuses } from '../../shared/types';
 import { PoepleService } from './poeple.service';
 import { remult } from '../../shared/remult';
 
@@ -14,16 +14,16 @@ export class DeliveriesService {
   public repo = remult.repo(Deliveries)
   
   constructor(private readonly poepleService:PoepleService){}
-  async init(pageSize:number, pageIndex:number, ids?:string[], q?:string): Promise<boolean> {
+  async init(pageSize:number, pageIndex:number, ids?:string[], q?:string, status?:Statuses): Promise<boolean> {
      this.repo.liveQuery({limit: pageSize, page: pageIndex,
       include: {people: true},
-      where: { ...(ids?.length ? { peopleId: { $in: ids } } : {}), ...(q ? { id: q } : {}) },
+      where: { ...(ids?.length ? { peopleId: { $in: ids } } : {}), ...(q ? { id: q } : {}) , ...(status ? {...Deliveries.statusFilter({query:status})} : {})},
       orderBy: {updatedAt: 'desc'}}).subscribe(async (info)=> {
       // const peopleIds = info.items.map(row => row.peopleId);
       // await this.poepleService.getPeoplesByIds(peopleIds)
       this.deliveries = info.items
     })
-      this.total = await this.repo.count()
+      this.total = await this.repo.count({ ...(ids?.length ? { peopleId: { $in: ids } } : {}), ...(q ? { id: q } : {}) , ...(status ? {...Deliveries.statusFilter({query:status})} : {})})
       return false
   }
   async insert(deliverie:Partial<Deliveries>):Promise<Deliveries>{

@@ -1,7 +1,8 @@
 import { Distributes } from '../types/distributes';
 import { Deliveries, People, Statuses } from '../types';
 import { Archive } from '../types/archive';
-import { BackendMethod, remult } from '../remult';
+import { BackendMethod, EntityFilter, MembersOnly, remult } from '../remult';
+import { Roles } from '../types/roles';
 
 const distributesRepo = remult.repo(Distributes);
 const deliveriesRepo = remult.repo(Deliveries);
@@ -18,7 +19,7 @@ export class DistributesController {
 
     const peoples = await peoplesRepo.find({ where: { active: true }, orderBy: { order: 'asc' } });
 
-    let deliveries: Deliveries[] = [];
+    let deliveries:Partial<MembersOnly<Deliveries>>[] = [];
     peoples.forEach((p) => {
       deliveries = [
         ...deliveries,
@@ -79,5 +80,20 @@ export class DistributesController {
       console.log(error);
       return undefined;
     }
+  }
+
+  @BackendMethod({allowed: true})
+  static async updateStatusMany(options:{where:EntityFilter<Deliveries>, statusToUpdate:Statuses}){
+    
+    const del = await deliveriesRepo.find({where: options.where})
+    const delToUpdate = del.filter(item => item.status.findIndex(st => st.status === options.statusToUpdate) === -1)
+
+    for(let row of delToUpdate){
+     await deliveriesRepo.update(row.id, {
+        ...row,
+        status: [{status: options.statusToUpdate, createdAt: new Date(), updatePhone: 'אתר'}, ...row.status]
+      })
+    }
+    return {msg: 'success'}
   }
 }

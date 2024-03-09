@@ -8,6 +8,8 @@ import { DeliveriesModalComponent } from '../../components/deliveries-modal/deli
 import { Deliveries, Statuses } from '../../../shared/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ReportService } from '../../services/reports.service';
+import { DistributesController } from '../../../shared/controllers/distributes.controller';
+import { remult } from 'remult';
 
 @Component({
   selector: 'app-deliveries',
@@ -22,6 +24,9 @@ export class DeliveriesComponent {
   loading = false
   searchToremId!: string[];
   query!:string;
+  statusFilter?:Statuses
+  statusToUpdate!:Statuses
+  remult = remult
   
   constructor(
     public deliveriesService: DeliveriesService,
@@ -39,16 +44,16 @@ export class DeliveriesComponent {
     const { pageSize, pageIndex } = params;
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query);
+    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query, this.statusFilter);
     this.loading = false
   }
   async onChangeUsersFilter(ids: string[]) {
     this.searchToremId = ids
-    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query);
+    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query), this.statusFilter;
   }
   async onChangeQueryFilter(query: string) {
     this.query = query
-    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query);
+    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query, this.statusFilter);
   }
   openDeliveriesModal() {
     this.modal.create({
@@ -92,5 +97,19 @@ export class DeliveriesComponent {
       poultry: count, 
       cosher: people?.cosher}));
     this.reportService.createExcelFile(heading, users, fileName, sheetName);
+  }
+
+  async updateManyStatus(){
+    try {
+      this.message.loading("הפעולה מתבצעת, אנא המתן...")
+      await DistributesController.updateStatusMany({
+        where: {...(this.searchToremId?.length ? { peopleId: { $in: this.searchToremId } } : {}), ...(this.query ? { id: this.query } : {}) , ...(this.statusFilter ? {...Deliveries.statusFilter({query:this.statusFilter})} : {})},
+        statusToUpdate:this.statusToUpdate
+      })
+      this.message.success("הפעולה הושלמה בהצלחה")
+    } catch (error) {
+      this.message.error("אירעה שגיאה, נסה שוב")
+      console.error(error);
+    }
   }
 }
