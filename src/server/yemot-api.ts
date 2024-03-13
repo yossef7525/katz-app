@@ -5,6 +5,28 @@ import { Deliveries, People, Statuses } from "../shared/types";
 
 const YemotRouts = Router();
 
+YemotRouts.get('/details', api.withRemult, async (req, res)=> {
+    const ApiPhone= `${req.query['ApiPhone']}`
+    const repo = remult.repo(People)
+    const people = (await repo.find({where:{phones: {$contains: ApiPhone}}})).at(0)
+    if(!people) {
+        res.send("id_list_message=t-מספר טלפון לא קיים במערכת.&go_to_folder=/")
+    } else {
+        const message = `
+        להלן הפרטים כפי שמעודכנים במערכת:
+        שם: ${people.firstName} ${people.lastName}:
+        כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor}: דירה: ${people.apartment}:
+        מספר ילדים: ${people.children}:
+        מספר עופות: ${people.poultry}:
+        כשרות: ${people.cosher}:
+        אלו הפרטים שמעודכנים אצלינו, במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם.
+        `
+        res.send(`id_list_message=t-${message}.&go_to_folder=/`)
+    }
+
+})
+
+
 YemotRouts.get('/Building', api.withRemult, async (req, res) => {
     try {
         const [packId, ApiPhone] = [`${req.query['packId']}`, `${req.query['ApiPhone']}`]
