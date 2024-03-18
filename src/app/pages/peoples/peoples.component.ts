@@ -62,7 +62,7 @@ export class PeoplesComponent {
     this.message.remove(m.messageId);
     this.message.success(active ? 'המשתמש הופעל בהצלחה' : 'המשתמש הוגדר כלא פעיל בהצלחה');
   }
-  async exportToExcel() {
+  async exportToExcel(forUpdate?:boolean) {
     const m = this.message.loading('מתבצע יצוא נתמכים לקובץ אקסל, אנא המתן להשלמת הפעולה!');
     const res = await this.peopleService.repo.find({
       limit: 10000,
@@ -75,8 +75,14 @@ export class PeoplesComponent {
     const heading = [['שם פרטי', 'שם משפחה', 'שכונה', 'כתובת', 'בנין', 'קומה', 'דירה', 'טלפון', 'ילדים', 'עופות', 'כשרות']];
     const fileName = 'נתמכים גומלי חסד.xlsx';
     const sheetName = 'נתמכים';
+    if(forUpdate) {
+      const users = res.map(row => {return {...row, phones: row.phones[0], phone2: row.phones[1], phone3: row.phones[2] }})
+      const keys = Object.keys(users[0])
+      this.reportService.createExcelFile([keys], users, fileName, sheetName);
+      return
+    }
     const users = res.map(({ firstName, lastName, neighborhood, address, building,floor, apartment, phones, children, poultry, cosher  }) => ({
       firstName, lastName, neighborhood, address, building,floor, apartment,  phones: phones ? phones[0] : '', children, poultry, cosher}));
-    this.reportService.createExcelFile(heading, users, fileName, sheetName);
+      this.reportService.createExcelFile(heading, users, fileName, sheetName);
   }
 }
