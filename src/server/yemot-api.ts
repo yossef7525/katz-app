@@ -79,11 +79,39 @@ YemotRouts.get('/Delivered', api.withRemult, async (req, res) => {
         res.send("id_list_message=t-שגיאה.&go_to_folder=/8/2")
     }
 })
+YemotRouts.get('/DeliveredMany', api.withRemult, async (req, res) => {
+    try {
+        const [packIdStart, packIdEnd,  ApiPhone] = [`${req.query['packIdStart']}`,`${req.query['packIdEnd']}`, `${req.query['ApiPhone']}`]
+        const repo = remult.repo(Deliveries)
+        for (let index = Number(packIdStart); index < Number(packIdEnd); index++) {
+            
+            const shipping =  (await repo.find({where: {id: index.toString()}}))[0]
+            
+            
+        
+        shipping.status = [
+            {
+                createdAt:new Date(), 
+                status: Statuses.Delivered, 
+                updatePhone: ApiPhone
+            }, ...(shipping.status || [])]
+            
+            shipping.updatePhone = ApiPhone
+            
+            await repo.save(shipping)
+            sendNotification(shipping)
+        }
+            res.send("id_list_message=t-בוצע.&go_to_folder=/8/2")
+        } catch {
+            res.send("id_list_message=t-שגיאה.&go_to_folder=/8/2")
+        }
+})
 
 
 async function sendNotification(shipping:Deliveries){
     const repo = remult.repo(People)
     const people = (await repo.find({where: {id: shipping.peopleId}}))[0]
+    if(!shipping.count) return;
     try {
         await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
     } catch (error) {

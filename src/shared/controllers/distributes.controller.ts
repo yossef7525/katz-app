@@ -28,7 +28,7 @@ export class DistributesController {
           peopleId: p.id,
           distributeId: `${newDistributes.id}`,
           updatePhone: 'נוצר אוטומטי',
-          count: p.poultry,
+          count: p.poultry - (p.poultryNextMonth || 0),
           status: [
             {
               status: Statuses.Absorbed,

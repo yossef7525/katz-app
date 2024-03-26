@@ -39,6 +39,9 @@ export class People {
 
     @Fields.number()
     poultry!:number
+   
+    @Fields.number()
+    poultryNextMonth?:number
     
     @Fields.string()
     gabaiCode!:string
@@ -48,9 +51,11 @@ export class People {
     
     @Fields.number()
     order?:number
+    
     @Fields.boolean()
     active?:boolean
-
+    
+    
     @Relations.toMany(() => Deliveries)
     deliveries?: Deliveries[]
     static userNameFilter = Filter.createCustom<People, {query:string}>(
@@ -60,3 +65,10 @@ export class People {
         })
       });
 }
+
+
+export interface PeopleExcel extends People{
+    phone: string,
+    phone2:string,
+    phone3:string,
+  };

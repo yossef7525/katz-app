@@ -6,6 +6,7 @@ import { People } from '../../../shared/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import * as XLSX from 'xlsx';
 import { PeopleController } from '../../../shared/controllers/people.controller';
+import { ReportService } from '../../services/reports.service';
 
 interface IModalData {
   people:People
@@ -25,7 +26,7 @@ interface PeopleExcel extends People{
 export class PeoplesModalComponent implements OnInit {
   public form!: FormGroup;
   readonly nzModalData: IModalData = inject(NZ_MODAL_DATA)
-  constructor(private fb: FormBuilder, private peopleService: PoepleService, private nzModal:NzModalRef, private nzMessages:NzMessageService) {}
+  constructor(private fb: FormBuilder, private peopleService: PoepleService, private nzModal:NzModalRef, private nzMessages:NzMessageService, private reportService:ReportService) {}
 
   ngOnInit(): void {
 
@@ -75,32 +76,14 @@ export class PeoplesModalComponent implements OnInit {
   }
 
   async onFileChange(evt: any) {
-    /* wire up file reader */
-    const target: DataTransfer = <DataTransfer>(evt.target);
-    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
-    const reader: FileReader = new FileReader();
-    reader.onload = async (e: any) => {
-      /* read workbook */
-      const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
-
-      /* grab first sheet */
-      const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-
-      /* save data */
-      const data = XLSX.utils.sheet_to_json(ws) as PeopleExcel[];
-      
-      // let obj:any[] = []
-      data.forEach(row => {
-        row.active = true,
-        row.phones = [`0${row.phone}`, (row.phone2 ? `0${row.phone2}` : ''),(row.phone3 ? `0${row.phone3}` : '')]
-      })
-      // console.log(obj);
+    const data = this.reportService.uploadPeoplesFromExcel(evt)
      const res = await PeopleController.importPeopleFromExcelFile(data)
-      // this.deliveriesService.deliveries.update((deliveries:Deliveries[]) => [...deliveries, ...res])
       this.nzModal.close()
     };
-    reader.readAsBinaryString(target.files[0]);
+  async onUpdateFileChange(evt: any) {
+    const data = this.reportService.uploadPeoplesFromExcel(evt)
+     const res = await PeopleController.updatePeopleFromExcelFile(data)
+      this.nzModal.close()
+    };
   }
-}
+
