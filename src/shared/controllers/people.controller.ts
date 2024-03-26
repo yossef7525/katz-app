@@ -6,7 +6,10 @@ export class PeopleController {
     static async importPeopleFromExcelFile(peoples:People[]){
        const res = await remult.repo(People).insert(peoples);
        return res
-    }
+      }
+      
+      
+    @BackendMethod({allowed: true})
     static async updatePeopleFromExcelFile(peoples:People[]){
         const repo = remult.repo(People)
         for (let people of peoples) {
