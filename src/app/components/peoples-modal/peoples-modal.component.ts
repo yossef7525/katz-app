@@ -164,7 +164,6 @@ export class PeoplesModalComponent implements OnInit {
 
       // let obj:any[] = []
       data.forEach((row) => {
-        (row.active = true),
           (row.phones = [
             `0${row.phone}`,
             row.phone2 ? `0${row.phone2}` : '',
