@@ -79,6 +79,32 @@ YemotRouts.get('/Delivered', api.withRemult, async (req, res) => {
         res.send("id_list_message=t-שגיאה.&go_to_folder=/8/2")
     }
 })
+YemotRouts.get('/CancelDelivered', api.withRemult, async (req, res) => {
+    try {
+        const [packId, ApiPhone] = [`${req.query['packId']}`, `${req.query['ApiPhone']}`]
+        const repo = remult.repo(Deliveries)
+        const shipping =  (await repo.find({where: {id: packId}}))[0]
+
+        if(!shipping) {
+            res.send("id_list_message=t-מספר משלוח שגוי.&go_to_folder=/8/5"); 
+            return;
+        } else if (shipping.status.findIndex(s => s.status === Statuses.Delivered) === -1) {
+            res.send("id_list_message=t-טרם עודכן סטטוס הגיע לדירה.&go_to_folder=/8/5");
+            return;
+        }
+
+        shipping.status = [
+             ...(shipping.status.filter(st => st.status !== Statuses.Delivered) || [])]
+
+        shipping.updatePhone = ApiPhone
+       
+        await repo.save(shipping)
+        sendCancelNotification(shipping)
+        res.send("id_list_message=t-בוצע.&go_to_folder=/8/5")
+    } catch {
+        res.send("id_list_message=t-שגיאה.&go_to_folder=/8/5")
+    }
+})
 YemotRouts.get('/DeliveredMany', api.withRemult, async (req, res) => {
     try {
         const [packIdStart, packIdEnd,  ApiPhone] = [`${req.query['packIdStart']}`,`${req.query['packIdEnd']}`, `${req.query['ApiPhone']}`]
@@ -116,9 +142,17 @@ async function sendNotification(shipping:Deliveries){
         await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
     } catch (error) {
         console.log("error call to yemot!");
-        
     }
+}
+async function sendCancelNotification(shipping:Deliveries){
+    const repo = remult.repo(People)
+    const people = (await repo.find({where: {id: shipping.peopleId}}))[0]
+    try {
+        await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=38889&phones={"${people.phones[0]}":""}`)
+    } catch (error) {
+        console.log("error call to yemot!");
     }
+}
 
 
 export default YemotRouts

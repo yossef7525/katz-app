@@ -37,6 +37,13 @@
   <label nz-radio [nzValue]="statusesList.Delivered">הגיע לדירה</label>
   <label nz-radio [nzValue]="">הכל</label>
 </nz-radio-group>
+<p>
+  או סנן לפי הושלם:
+</p>
+<nz-radio-group [(ngModel)]="inProcessOnly" (ngModelChange)="onChangeQueryFilter(query)">
+  <label nz-radio [nzValue]="true">לא הושלמו</label>
+  <label nz-radio [nzValue]="false">הכל</label>
+</nz-radio-group>
   <p *ngIf="remult.isAllowed('devops')">
     החל סטטוס משלוח:
 </p>

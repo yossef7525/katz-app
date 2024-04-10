@@ -40,6 +40,12 @@ export class Deliveries {
          return deliveries.status.findIndex(st => st.status === query) > -1
         })
     });
+    static filterNotDeliveries = Filter.createCustom<Deliveries>(
+        async () => {
+        return ArrayEntityDataProvider.rawFilter((deliveries:Deliveries) => {
+         return deliveries.status.findIndex(st => st.status === Statuses.Delivered) === -1
+        })
+    });
 }
 
 

@@ -26,6 +26,7 @@ export class DeliveriesComponent {
   query!:string;
   statusFilter?:Statuses
   statusToUpdate!:Statuses
+  inProcessOnly!:boolean
   remult = remult
   
   constructor(
@@ -44,16 +45,16 @@ export class DeliveriesComponent {
     const { pageSize, pageIndex } = params;
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query, this.statusFilter);
+    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query, this.statusFilter, this.inProcessOnly);
     this.loading = false
   }
   async onChangeUsersFilter(ids: string[]) {
     this.searchToremId = ids
-    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query), this.statusFilter;
+    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query), this.statusFilter, this.inProcessOnly;
   }
   async onChangeQueryFilter(query: string) {
     this.query = query
-    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query, this.statusFilter);
+    await this.deliveriesService.init(this.pageSize, this.pageIndex, this.searchToremId, this.query, this.statusFilter, this.inProcessOnly);
   }
   openDeliveriesModal() {
     this.modal.create({
@@ -103,7 +104,7 @@ export class DeliveriesComponent {
     try {
       this.message.loading("הפעולה מתבצעת, אנא המתן...")
       await DistributesController.updateStatusMany({
-        where: {...(this.searchToremId?.length ? { peopleId: { $in: this.searchToremId } } : {}), ...(this.query ? { id: this.query } : {}) , ...(this.statusFilter ? {...Deliveries.statusFilter({query:this.statusFilter})} : {})},
+        where: {...(this.searchToremId?.length ? { peopleId: { $in: this.searchToremId } } : {}), ...(this.query ? { id: this.query } : {}) , ...(this.statusFilter ? {...Deliveries.statusFilter({query:this.statusFilter})} : {}), ...(this.inProcessOnly ? {...Deliveries.filterNotDeliveries()} : {})},
         statusToUpdate:this.statusToUpdate
       })
       this.message.success("הפעולה הושלמה בהצלחה")
