@@ -6,17 +6,18 @@ import { UsersSelectorComponent } from './components/users-selector/users-select
 // import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 // import { YearSelectorComponent } from './components/year-selector/year-selector.component';
 import { NgZorroModule } from '../ng-zorro-module';
+import { IsDeliveredPipe } from './pipes/is-deliveried.pipe';
 
 
 
 @NgModule({
-  declarations: [UserNamePipe, UsersSelectorComponent],
+  declarations: [UserNamePipe, UsersSelectorComponent, IsDeliveredPipe],
   imports: [
     CommonModule,
     NgZorroModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  exports:[UserNamePipe, UsersSelectorComponent]
+  exports:[UserNamePipe, UsersSelectorComponent, IsDeliveredPipe]
 })
 export class SharedModule { }

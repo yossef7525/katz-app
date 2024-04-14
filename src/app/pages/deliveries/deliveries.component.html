@@ -84,6 +84,7 @@
 
       <thead>
         <tr>
+          <th nzWidth="40px" nzColumnKey="displayName">✅</th>
           <th nzColumnKey="displayName">קוד משלוח</th>
           <th nzColumnKey="phone">עבור</th>
           <th nzColumnKey="phone2" [nzWidth]="'400px'">סטטוס</th>
@@ -95,6 +96,13 @@
       <tbody>
         <ng-container *ngFor="let data of table.data; let i = index">
           <tr (click)="update(data)">
+            <td
+          nzWidth="40px"
+          nzAlign="center"
+          [nzChecked]="data.status | IsDelivered"
+          [nzDisabled]="false"
+          (nzCheckedChange)="setDeliverie($event, i)"
+        ></td>
             <td>{{ data.id }}</td>
             <!-- <td>{{ data.peopleId || "" | UserName | async }}</td> -->
             <td>{{ data.people?.firstName }} {{data.people?.lastName }}</td>

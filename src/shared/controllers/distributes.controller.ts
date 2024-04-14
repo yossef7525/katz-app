@@ -96,4 +96,25 @@ export class DistributesController {
     }
     return {msg: 'success'}
   }
+  
+  @BackendMethod({allowed: true})
+  static async setDeliveried(options:{isDeliveried:boolean, id:string}){
+    
+    const del = await deliveriesRepo.findOne({where: {id:options.id}})
+
+    if(options.isDeliveried){
+      if(del.status.findIndex(s => s.status === Statuses.Delivered) > -1) return;
+      await deliveriesRepo.update(del.id, {
+        ...del,
+        status: [{status: Statuses.Delivered, createdAt: new Date(), updatePhone: 'אתר'}, ...del.status]
+      })
+    } else {
+      if(del.status.findIndex(s => s.status === Statuses.Delivered) === -1) return;
+      await deliveriesRepo.update(del.id, {
+        ...del,
+        status: [...del.status.filter(s => s.status !== Statuses.Delivered)]
+      })
+    }
+    return {msg: 'success'}
+  }
 }

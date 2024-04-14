@@ -42,7 +42,8 @@ export class CounterComponent implements OnInit {
             );
           });
         // this.lastDeliveries =  info.items[0] ;
-        this.lastDeliveries = this.firstLoaded ? info.items[0] : undefined;
+        const isDeliveried = info.items[0].status.findIndex(s => s.status === Statuses.Delivered) > -1
+        this.lastDeliveries = this.firstLoaded ? isDeliveried ?  info.items[0] : undefined : undefined;
         this.firstLoaded = true
         setTimeout(() => {
           this.lastDeliveries = undefined;

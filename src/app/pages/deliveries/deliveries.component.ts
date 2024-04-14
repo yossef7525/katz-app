@@ -113,4 +113,14 @@ export class DeliveriesComponent {
       console.error(error);
     }
   }
+ async setDeliverie(deliverie:boolean, index:number){
+    try {
+      this.message.loading("הפעולה מתבצעת, אנא המתן...")
+      await DistributesController.setDeliveried({isDeliveried: deliverie, id: this.deliveriesService.deliveries[index].id})
+      this.message.success("הפעולה הושלמה בהצלחה")
+    } catch (error) {
+      this.message.error("אירעה שגיאה, נסה שוב")
+      console.error(error);
+    }
+  }
 }
