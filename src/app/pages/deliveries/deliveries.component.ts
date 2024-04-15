@@ -76,6 +76,7 @@ export class DeliveriesComponent {
     const m = this.message.loading('מתבצע יצוא מדבקות לקובץ אקסל, אנא המתן להשלמת הפעולה!');
     const res = await this.deliveriesService.repo.find({
       limit: 10000,
+      where: { ...(this.searchToremId?.length ? { peopleId: { $in: this.searchToremId } } : {}), ...(this.query ? { id: this.query } : {}) , ...(this.statusFilter ? {...Deliveries.statusFilter({query:this.statusFilter})} : {}), ...(this.inProcessOnly ? {...Deliveries.filterNotDeliveries()} : {})},
       orderBy: {id: 'asc'},
       include: {people: true}
     });
