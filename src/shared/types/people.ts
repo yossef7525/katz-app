@@ -1,8 +1,9 @@
 import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "../remult";
 import { Deliveries } from "./deliverie";
+import { Roles } from "./roles";
 
 @Entity("peoples", {
-    allowApiCrud: true
+    allowApiCrud: Roles.User
 })
 
 export class People {

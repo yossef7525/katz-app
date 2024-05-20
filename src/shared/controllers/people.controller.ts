@@ -1,15 +1,16 @@
 import { BackendMethod, remult } from "../remult";
 import { People } from "../types";
+import { Roles } from "../types/roles";
 export class PeopleController {
     
-    @BackendMethod({allowed: true})
+    @BackendMethod({allowed: Roles.User})
     static async importPeopleFromExcelFile(peoples:People[]){
        const res = await remult.repo(People).insert(peoples);
        return res
       }
       
       
-    @BackendMethod({allowed: true})
+    @BackendMethod({allowed: Roles.User})
     static async updatePeopleFromExcelFile(peoples:People[]){
         const repo = remult.repo(People)
         

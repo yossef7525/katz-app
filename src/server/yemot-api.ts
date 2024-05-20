@@ -18,7 +18,7 @@ YemotRouts.get('/details', api.withRemult, async (req, res)=> {
 
 })
 
-
+// הגיע לבנין 8.1
 YemotRouts.get('/Building', api.withRemult, async (req, res) => {
     try {
         const [packId, ApiPhone] = [`${req.query['packId']}`, `${req.query['ApiPhone']}`]
@@ -49,6 +49,7 @@ YemotRouts.get('/Building', api.withRemult, async (req, res) => {
     }
 })
 
+// 8.2 הגיע לדירה
 YemotRouts.get('/Delivered', api.withRemult, async (req, res) => {
     try {
         const [packId, ApiPhone] = [`${req.query['packId']}`, `${req.query['ApiPhone']}`]
@@ -79,6 +80,8 @@ YemotRouts.get('/Delivered', api.withRemult, async (req, res) => {
         res.send("id_list_message=t-שגיאה.&go_to_folder=/8/2")
     }
 })
+
+// ביטול מסירה עם הודעה 8.4
 YemotRouts.get('/CancelDelivered', api.withRemult, async (req, res) => {
     try {
         const [packId, ApiPhone] = [`${req.query['packId']}`, `${req.query['ApiPhone']}`]
@@ -105,6 +108,8 @@ YemotRouts.get('/CancelDelivered', api.withRemult, async (req, res) => {
         res.send("id_list_message=t-שגיאה.&go_to_folder=/8/5")
     }
 })
+
+// עדכון מרובה הגיע לדירה 8.3
 YemotRouts.get('/DeliveredMany', api.withRemult, async (req, res) => {
     try {
         const [packIdStart, packIdEnd,  ApiPhone] = [`${req.query['packIdStart']}`,`${req.query['packIdEnd']}`, `${req.query['ApiPhone']}`]
@@ -134,6 +139,7 @@ YemotRouts.get('/DeliveredMany', api.withRemult, async (req, res) => {
 })
 
 
+// הודעת מסירה
 async function sendNotification(shipping:Deliveries){
     const repo = remult.repo(People)
     const people = (await repo.find({where: {id: shipping.peopleId}}))[0]
@@ -144,6 +150,8 @@ async function sendNotification(shipping:Deliveries){
         console.log("error call to yemot!");
     }
 }
+
+// הודעת ביטול
 async function sendCancelNotification(shipping:Deliveries){
     const repo = remult.repo(People)
     const people = (await repo.find({where: {id: shipping.peopleId}}))[0]

@@ -1,7 +1,8 @@
 import { Entity, Fields } from "../remult";
+import { Roles } from "./roles";
 
 @Entity('distributes', {
-    allowApiCrud: true
+    allowApiCrud: Roles.User
 })
 export class Distributes{
     @Fields.cuid()

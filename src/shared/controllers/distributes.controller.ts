@@ -11,7 +11,7 @@ const peoplesRepo = remult.repo(People);
 
 export class DistributesController {
 
-  @BackendMethod({ allowed: true })
+  @BackendMethod({ allowed: Roles.User })
   static async addDistribute(distributes: string): Promise<Distributes> {
     console.log('distributesRepo: ', distributes);
 
@@ -44,7 +44,7 @@ export class DistributesController {
   }
 
 
-  @BackendMethod({ allowed: true })
+  @BackendMethod({ allowed: Roles.User })
   static async moveToArchive(
     distributeId: string
   ): Promise<Distributes | undefined> {
@@ -82,7 +82,7 @@ export class DistributesController {
     }
   }
 
-  @BackendMethod({allowed: true})
+  @BackendMethod({allowed: Roles.User})
   static async updateStatusMany(options:{where:EntityFilter<Deliveries>, statusToUpdate:Statuses}){
     
     const del = await deliveriesRepo.find({where: options.where})

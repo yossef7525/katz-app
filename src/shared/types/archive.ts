@@ -1,7 +1,8 @@
 import { Entity, Fields } from "../remult";
 import { Deliveries } from "./deliverie";
+import { Roles } from "./roles";
 
 @Entity('archive', {
-    allowApiCrud: true
+    allowApiCrud: Roles.User
 })
 export class Archive extends Deliveries{}

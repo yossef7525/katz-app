@@ -5,7 +5,7 @@ import crypto from 'crypto-js'
 
 
 export class AuthController {
-    @BackendMethod( {allowed: true} )
+    @BackendMethod( {allowed: Roles.DevOps} )
     static async insertUser(name:string, pass:string, roles:Roles[]) {
         const userRolesRepo = remult.repo(UserRoles)
         const newUser = userRolesRepo.insert({ name, roles, pass: passToHash(pass) })
