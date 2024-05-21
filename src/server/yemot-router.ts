@@ -21,29 +21,41 @@ router.get('/deliveryDetails', async(call) => {
     const repo = remult.repo(People)
     const deliveries = remult.repo(Deliveries)
     const comments = remult.repo(Comment)
-    const people = (await repo.find({where:{phones: {$contains: ApiPhone}}})).at(0)
+    const people = (await repo.find({where:{phones: {$contains: ApiPhone}, active: true}})).at(0)
+
+    if(!people){
+        return call.id_list_message([{type: 'text', data: `אנו מצטערים, אינכם מופיעים ברשימת הזכאות לקבלת עופות`}])
+
+    }
     const packInStack = (await deliveries.find({where:{peopleId: people?.id}})).at(0)
 
     if(!packInStack){
         return call.id_list_message([{type: 'text', data: `הנך זכאי לקבל בחלוקה הקרובה ${people?.poultry} עופות`}])
     }
     if(packInStack.status.length === 1){
-        return call.id_list_message([{type: 'text', data: `המשלוח שלך הכוללת ${packInStack.count} טרם נמסרה - המשלוח תצא אליך בקרוב` }])
+        return call.id_list_message([{type: 'text', data: `המשלוח שלך הכולל ${packInStack.count} עופות - טרם נמסר - המשלוח יצא אליך בקרוב` }])
     }
     const packIsDelivered = packInStack.status.findIndex(s => s.status === Statuses.Delivered) > -1
     const message = packIsDelivered ?
-    `המשלוח שלך הכוללת ${packInStack.count} הגיע אליך הביתה` : 
-    `המשלוח שלך הכוללת ${packInStack.count} נמצא אצליך בבנין`  
+    `המשלוח שלך הכולל ${packInStack.count} עופות - הגיע אליך הביתה` : 
+    `המשלוח שלך הכולל ${packInStack.count} עופות - נמצא אצליך בבנין`  
 
     const lavel = await call.read([{type: 'text', data: message}, {type: 'text', data: 'אם לא קיבלת את המשלוח לחץ 1, אם קיבלת יותר עופות לחץ 2, אם קיבלת פחות עופות לחץ 3'}], 'tap') 
     switch (lavel) {
         case '1':
+            await comments.insert({
+                peopleId: people?.id,
+                phoneUpdate: ApiPhone,
+                comment: 'לא קיבל עופות',
+                payload: [{key: 'כמות עופות', value: `${packInStack.count}`}] 
+            })
             return call.id_list_message([{type: 'text', data: 'אנו מצטערים, המידע בבדיקה, אנו ניצור עמכם קשר'}])
             case '2' :
                 case '3' :
                     const count = await call.read([{type: 'text', data: 'הקש כמות'}], 'tap')
                     await comments.insert({
                         peopleId: people?.id,
+                        phoneUpdate: ApiPhone,
                         comment: lavel === '2' ? 'קיבל יותר עופות' : 'קיבל פחות עופות',
                         payload: [{key: 'כמות עופות', value: count}] 
                     })

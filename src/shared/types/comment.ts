@@ -9,6 +9,9 @@ export class Comment{
    
     @Fields.string()
     peopleId?:string
+   
+    @Fields.string()
+    phoneUpdate?:string
     
     @Fields.string()
     comment?:string
