@@ -7,9 +7,10 @@ import { SortedController } from '../shared/controllers/sorted.controller'
 import { UserRoles } from '../shared/types/user-roles'
 import { AuthController } from '../shared/controllers/auth.controller'
 import { PeopleController } from '../shared/controllers/people.controller'
+import {Comment} from '../shared/types'
 
 export const api = remultExpress({
     getUser: req => req.session!["user"],
-    entities: [People, Deliveries, Distributes, Archive, UserRoles],
+    entities: [People, Deliveries, Distributes, Archive, UserRoles, Comment],
     controllers: [DistributesController, SortedController, AuthController, PeopleController]
 })
