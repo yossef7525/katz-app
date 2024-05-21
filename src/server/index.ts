@@ -4,6 +4,7 @@ import { auth } from "./auth"
 import path from "path"
 
 import YemotRouts from './yemot-api'
+import Yemot2 from './yemot-router'
 import session from "cookie-session"
 
 
@@ -16,6 +17,7 @@ app.use(
 app.use(api)
 app.use(auth)
 app.use('/yemot', YemotRouts)
+app.use('/yemot2', api.withRemult, Yemot2.asExpressRouter())
 
 app.use(express.static(path.join(__dirname, "../katz-app")))
 app.get("/*", (req, res) => {

@@ -2,8 +2,26 @@ import { Router } from "express";
 import {api} from './api';
 import { remult } from "remult";
 import { Deliveries, People, Statuses } from "../shared/types";
+import { YemotRouter } from 'yemot-router2';
+const router = YemotRouter();
 
 const YemotRouts = Router();
+
+router.get('/details', async (call)=> {
+    const ApiPhone = call.ApiPhone
+    const repo = remult.repo(People)
+    const people = (await repo.find({where:{phones: {$contains: ApiPhone}}})).at(0)
+        const message = !people ? 
+        'מספר טלפון לא קיים במערכת'
+        :
+        `להלן הפרטים כפי שמעודכנים במערכת: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם.`
+        return call.id_list_message([
+            {
+                type: 'text',
+                data: message
+            }
+    ])
+})
 
 YemotRouts.get('/details', api.withRemult, async (req, res)=> {
     const ApiPhone= `${req.query['ApiPhone']}`
@@ -12,10 +30,9 @@ YemotRouts.get('/details', api.withRemult, async (req, res)=> {
     if(!people) {
         res.send("id_list_message=t-מספר טלפון לא קיים במערכת.&go_to_folder=/")
     } else {
-        const message = `id_list_message=t-להלן הפרטים כפי שמעודכנים במערכת: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם.&go_to_folder=/`
+        const message = `id_list_message=t-להלן הפרטים כפי שמעודכנים במערכת: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם.`
         res.send(message)
     }
-
 })
 
 // הגיע לבנין 8.1
