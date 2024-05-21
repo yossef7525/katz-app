@@ -15,7 +15,8 @@ router.get('/details', async (call)=> {
         return call.id_list_message([
             {
                 type: 'text',
-                data: message
+                data: message,
+                removeInvalidChars: true
             }
     ])
 })
