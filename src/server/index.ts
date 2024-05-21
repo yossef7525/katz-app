@@ -17,7 +17,7 @@ app.use(
 app.use(api)
 app.use(auth)
 app.use('/yemot', YemotRouts)
-app.use('/yemot2', Yemot2.asExpressRouter)
+app.use('/yemot2', api.withRemult, Yemot2.asExpressRouter)
 
 app.use(express.static(path.join(__dirname, "../katz-app")))
 app.get("/*", (req, res) => {
