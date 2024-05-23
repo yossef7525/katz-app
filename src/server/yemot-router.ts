@@ -13,7 +13,7 @@ router.get('/details', async (call)=> {
         'מספר טלפון לא קיים במערכת'
         :
         `להלן הפרטים כפי שמעודכנים במערכת: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם`
-        return call.id_list_message([{type: 'text',data: message}])
+        return call.id_list_message([{type: 'text',removeInvalidChars: true,data: message}])
 })
 
 router.get('/deliveryDetails', async(call) => {
@@ -30,17 +30,17 @@ router.get('/deliveryDetails', async(call) => {
     const packInStack = (await deliveries.find({where:{peopleId: people?.id}})).at(0)
 
     if(!packInStack){
-        return call.id_list_message([{type: 'text', data: `הנך זכאי לקבל בחלוקה הקרובה ${people?.poultry} עופות`}])
+        return call.id_list_message([{type: 'text',removeInvalidChars: true, data: `הנך זכאי לקבל בחלוקה הקרובה ${people?.poultry} עופות`}])
     }
     if(packInStack.status.length === 1){
-        return call.id_list_message([{type: 'text', data: `המשלוח שלך הכולל ${packInStack.count} עופות - אושר - החלוקה תתחיל בימים הקרובים - ניתן להתעדכן בשלוחה 1` }])
+        return call.id_list_message([{type: 'text', removeInvalidChars: true, data: `המשלוח שלך הכולל ${packInStack.count} עופות - אושר - החלוקה תתחיל בימים הקרובים - ניתן להתעדכן בשלוחה 1` }])
     }
     const packIsDelivered = packInStack.status.findIndex(s => s.status === Statuses.Delivered) > -1
     const message = packIsDelivered ?
     `המשלוח שלך הכולל ${packInStack.count} עופות - הגיע אליך הביתה` : 
     `המשלוח שלך הכולל ${packInStack.count} עופות - נמצא אצליך בבנין`  
 
-    const lavel = await call.read([{type: 'text', data: message}, {type: 'text', data: 'אם לא קיבלת את המשלוח לחץ 1, אם קיבלת יותר עופות לחץ 2, אם קיבלת פחות עופות לחץ 3'}], 'tap') 
+    const lavel = await call.read([{type: 'text',removeInvalidChars: true, data: message}, {type: 'text',removeInvalidChars: true, data: 'אם לא קיבלת את המשלוח לחץ 1, אם קיבלת יותר עופות לחץ 2, אם קיבלת פחות עופות לחץ 3'}], 'tap') 
     switch (lavel) {
         case '1':
             await comments.insert({
@@ -49,7 +49,7 @@ router.get('/deliveryDetails', async(call) => {
                 comment: 'לא קיבל עופות',
                 payload: [{key: 'כמות עופות', value: `${packInStack.count}`}] 
             })
-            return call.id_list_message([{type: 'text', data: 'אנו מצטערים, המידע בבדיקה, אנו ניצור עמכם קשר'}])
+            return call.id_list_message([{type: 'text',removeInvalidChars: true, data: 'אנו מצטערים, המידע בבדיקה, אנו ניצור עמכם קשר'}])
             case '2' :
                 case '3' :
                     const count = await call.read([{type: 'text', data: 'הקש כמות'}], 'tap')
@@ -59,7 +59,7 @@ router.get('/deliveryDetails', async(call) => {
                         comment: lavel === '2' ? 'קיבל יותר עופות' : 'קיבל פחות עופות',
                         payload: [{key: 'כמות עופות', value: count}] 
                     })
-                    return call.id_list_message([{type: 'text', data: 'אנו מצטערים, המידע בבדיקה, אנו ניצור עמכם קשר'}])
+                    return call.id_list_message([{type: 'text',removeInvalidChars: true, data: 'אנו מצטערים, המידע בבדיקה, אנו ניצור עמכם קשר'}])
         default:
             break;
     }
