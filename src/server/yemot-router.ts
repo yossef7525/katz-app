@@ -33,7 +33,7 @@ router.get('/deliveryDetails', async(call) => {
         return call.id_list_message([{type: 'text', data: `הנך זכאי לקבל בחלוקה הקרובה ${people?.poultry} עופות`}])
     }
     if(packInStack.status.length === 1){
-        return call.id_list_message([{type: 'text', data: `המשלוח שלך הכולל ${packInStack.count} עופות - טרם נמסר - המשלוח יצא אליך בקרוב` }])
+        return call.id_list_message([{type: 'text', data: `המשלוח שלך הכולל ${packInStack.count} עופות - אושר - החלוקה תתחיל בימים הקרובים - ניתן להתעדכן בשלוחה 1` }])
     }
     const packIsDelivered = packInStack.status.findIndex(s => s.status === Statuses.Delivered) > -1
     const message = packIsDelivered ?
@@ -99,3 +99,4 @@ router.get('/Building', async (call) => {
 
 
 export default router
+

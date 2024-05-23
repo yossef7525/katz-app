@@ -18,6 +18,9 @@ export class Comment{
     
     @Fields.json()
     payload?:payload[]
+   
+    @Fields.boolean()
+    complate?:boolean
 }
 export class payload{
     key!: string

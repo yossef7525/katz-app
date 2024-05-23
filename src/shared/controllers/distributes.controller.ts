@@ -39,7 +39,7 @@ export class DistributesController {
         },
       ];
     });
-    await deliveriesRepo.insert(deliveries);
+    await deliveriesRepo.insert(deliveries.filter(d => d.count && d.count > 0));
     return newDistributes;
   }
 
