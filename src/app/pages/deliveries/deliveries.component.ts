@@ -84,7 +84,7 @@ export class DeliveriesComponent {
     this.message.remove(m.messageId);
     this.message.success('הפעולה הושלמה בהצלחה!');
 
-    const heading = [['מספר משלוח','שם פרטי', 'שם משפחה', 'שכונה', 'כתובת', 'בנין', 'קומה', 'דירה', 'עופות', 'כשרות', 'טלפון צינתוק']];
+    const heading = [['מספר משלוח','שם פרטי', 'שם משפחה', 'שכונה', 'כתובת', 'בנין', 'קומה', 'דירה', 'עופות', 'כשרות', 'טלפון צינתוק', 'טלפון 2', 'טלפון 3']];
     const fileName = 'מדבקות למשלוחים.xlsx';
     const sheetName = 'משלוחים';
     const users = res.map(({ id, count, people  }) => ({
@@ -98,7 +98,9 @@ export class DeliveriesComponent {
       apartment: people?.apartment, 
       poultry: count, 
       cosher: people?.cosher,
-      phone: people?.phones[0]
+      phone: people?.phones[0],
+      phone2: people?.phones[1],
+      phone3: people?.phones[2]
     }));
     this.reportService.createExcelFile(heading, users, fileName, sheetName);
   }
