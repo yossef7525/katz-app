@@ -1,0 +1,38 @@
+<div class="flex flex-wrap gap-5 m-5">
+    <ng-container *ngFor="let comment of comments()">
+        <nz-card style="width:300px;">
+            <nz-card-meta
+            nzTitle="{{comment.comment}}"
+            nzDescription="{{(comment.peopleId || '') | UserName | async}}"
+            ></nz-card-meta>
+            <ng-container *ngFor="let payload of comment.payload">
+                <p><b>{{payload.key}}:</b> {{payload.value}}</p>
+            </ng-container>
+            <p><b>עודכן מטלפון:</b> {{comment.phoneUpdate}}</p>
+            <nz-radio-group  [(ngModel)]="comment.complate" nzButtonStyle="solid" (ngModelChange)="setCompleted(comment, $event)">
+                <label nz-radio-button  [nzValue]="true">טופל</label>
+                <label nz-radio-button  [nzValue]="false">לא טופל</label>
+              </nz-radio-group>
+              <button class="my-3 mx-auto" nz-button (click)="sendStartWorkNotification(comment)">שלח הודעה על התחלת טיפול</button>
+        </nz-card>
+    </ng-container>
+</div>
+<nz-divider nzText="פניות שטופלו"></nz-divider>
+<div class="flex flex-wrap gap-5 m-5">
+    <ng-container *ngFor="let comment of commentsComplete()">
+        <nz-card style="width:300px;">
+            <nz-card-meta
+            nzTitle="{{comment.comment}}"
+            nzDescription="{{(comment.peopleId || '') | UserName | async}}"
+            ></nz-card-meta>
+            <ng-container *ngFor="let payload of comment.payload">
+                <p><b>{{payload.key}}:</b> {{payload.value}}</p>
+            </ng-container>
+            <p><b>עודכן מטלפון:</b> {{comment.phoneUpdate}}</p>
+            <nz-radio-group  [(ngModel)]="comment.complate" nzButtonStyle="solid">
+                <label nz-radio-button  [nzValue]="true">טופל</label>
+                <label nz-radio-button  [nzValue]="false">לא טופל</label>
+              </nz-radio-group>
+        </nz-card>
+    </ng-container>
+</div>

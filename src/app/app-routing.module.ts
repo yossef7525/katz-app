@@ -6,6 +6,7 @@ import { DistributesComponent } from './pages/distributes/distributes.component'
 import { SortedComponent } from './pages/sorted/sorted.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
+import { CommentsComponent } from './pages/comments/comments.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/peoples', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'deliveries', component:DeliveriesComponent, canActivate:[AuthGuard]},
   {path: 'distributes', component:DistributesComponent, canActivate:[AuthGuard]},
   {path: 'sorted', component:SortedComponent, canActivate:[AuthGuard]},
+  {path: 'comments', component:CommentsComponent, canActivate:[AuthGuard]},
   { path: 'login-page', component: LoginComponent },
   {
     path: 'auth',

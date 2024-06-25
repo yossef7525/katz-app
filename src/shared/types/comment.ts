@@ -21,6 +21,9 @@ export class Comment{
    
     @Fields.boolean()
     complate?:boolean
+
+    @Fields.createdAt()
+    createdAt?:Date
 }
 export class payload{
     key!: string

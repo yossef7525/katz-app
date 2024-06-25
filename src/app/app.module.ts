@@ -27,6 +27,7 @@ import { PopupModalComponent } from './components/popup-modal/popup-modal.compon
 import { DistributesModalComponent } from './components/distributes-modal/distributes-modal.component';
 import { LoginComponent } from './pages/login/login.component';
 import { StatusTableComponent } from './components/status-table/status-table.component';
+import { CommentsComponent } from './pages/comments/comments.component';
 
 
 registerLocaleData(he);
@@ -45,7 +46,8 @@ registerLocaleData(he);
     PopupModalComponent,
     DistributesModalComponent,
     LoginComponent,
-    StatusTableComponent
+    StatusTableComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
