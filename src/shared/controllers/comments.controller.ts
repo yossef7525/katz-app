@@ -4,10 +4,11 @@ import { Comment } from "../types";
 
 export class CommentsController{
     @BackendMethod({ allowed: Roles.Admin })
-    static async setCompleted(comment: Comment, completed: boolean) {
+    static async setCompleted(comment: Comment, completed: boolean, call:boolean) {
         const repo = remult.repo(Comment)
         comment.complate = completed;
         await repo.save(comment)
+        if(!call) return;
         try {
             fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=40169&ttsMode=1&phones={"${comment.phoneUpdate}":"שלום זוהי הודעה מחברת גומלי חסד הפנייה ששלחת אלינו על ${comment.comment} טופלה בהצלחה במקרה הצורך שלח אלינו פנייה חדשה"}`)
         } catch (error) {
