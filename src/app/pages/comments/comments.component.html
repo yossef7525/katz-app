@@ -29,8 +29,8 @@
                 <p><b>{{payload.key}}:</b> {{payload.value}}</p>
             </ng-container>
             <p><b>עודכן מטלפון:</b> {{comment.phoneUpdate}}</p>
-            <nz-radio-group  [(ngModel)]="comment.complate" nzButtonStyle="solid">
-                <label nz-radio-button  [nzValue]="true">טופל</label>
+            <nz-radio-group  [(ngModel)]="comment.complate" nzButtonStyle="solid" (ngModelChange)="setCompleted(comment, $event, false)">
+                <label nz-radio-button  [nzValue]="true" [nzDisabled]="true">טופל</label>
                 <label nz-radio-button  [nzValue]="false">לא טופל</label>
               </nz-radio-group>
         </nz-card>

@@ -3,10 +3,10 @@ import { Roles } from "../types/roles";
 import { Comment } from "../types";
 
 export class CommentsController{
-    @BackendMethod({ allowed: Roles.Admin })
-    static async setCompleted(comment: Comment, completed: boolean, call:boolean) {
+    @BackendMethod({ allowed: Roles.Admin , paramTypes: () => [Comment, Boolean, Boolean]})
+    static async setCompleted(comment:Comment, completed:boolean, call:boolean) {
         const repo = remult.repo(Comment)
-        comment.complate = completed;
+        comment.complate = completed
         await repo.save(comment)
         if(!call) return;
         try {

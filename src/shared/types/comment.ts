@@ -24,6 +24,7 @@ export class Comment{
 
     @Fields.createdAt()
     createdAt?:Date
+    call?:boolean
 }
 export class payload{
     key!: string
