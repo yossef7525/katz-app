@@ -34,7 +34,7 @@ export class CommentsComponent implements OnInit{
     await CommentsController.setCompleted(comment, completed, call)
     this.ngOnInit()
     this.nzMessage.remove(msg.messageId)
-    this.nzMessage.success('הפניה סומנה כטופל, צינתוק נשלח לבעל הפניה.')
+    this.nzMessage.success('הפניה סומנה כטופל.')
   }
   sendStartWorkNotification(comment:Comment){
     CommentsController.sendNotificationCompleted(comment)
