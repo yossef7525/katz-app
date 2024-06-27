@@ -152,6 +152,18 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item class="flex justify-between items-center">
+          <nz-form-label nzFor="address">הורדת עופות חד פעמי</nz-form-label>
+          <nz-form-control class="text-left">
+            <input
+            class="address"
+              nz-input
+              placeholder="מספר עופות להורדה"
+              formControlName="poultryNextMonth"
+              [attr.id]="'f-name'"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="flex justify-between items-center">
           <nz-form-label nzFor="address">כשרות</nz-form-label>
           <nz-form-control class="text-left">
             <input
@@ -163,6 +175,9 @@
             />
           </nz-form-control>
         </nz-form-item>
+        <ng-container *ngIf="nzModalData && nzModalData.people && nzModalData.people.cosherList">
+          <nz-tag *ngFor="let item of nzModalData.people.cosherList" [nzColor]="'blue'">{{item}}</nz-tag>
+        </ng-container>
       </div>
     </div>
     <nz-divider *ngIf="nzModalData"  nzText="משלוחים פעילים">

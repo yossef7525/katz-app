@@ -75,6 +75,9 @@ export class DistributesController {
         await deliveriesRepo.delete(`${deliverie.id}`);
       }
       const res = await distributesRepo.update(distributeId, { archive: true });
+      // reset poultryNextMonth
+      peoplesRepo.updateMany({}, {poultryNextMonth: 0})
+      
       return res;
     } catch (error) {
       console.log(error);

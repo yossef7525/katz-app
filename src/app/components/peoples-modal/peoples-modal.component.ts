@@ -47,6 +47,7 @@ export class PeoplesModalComponent implements OnInit {
       poultry,
       neighborhood,
       cosher,
+      poultryNextMonth
     } = this.nzModalData?.people || '';
     this.form = this.fb.group({
       firstName: [firstName || '', [Validators.required]],
@@ -62,6 +63,7 @@ export class PeoplesModalComponent implements OnInit {
       poultry: [poultry || '', [Validators.required]],
       neighborhood: [neighborhood || '', [Validators.required]],
       cosher: [cosher || '', [Validators.required]],
+      poultryNextMonth: [poultryNextMonth || '', [Validators.required]],
     });
   }
   async submit() {
@@ -79,6 +81,7 @@ export class PeoplesModalComponent implements OnInit {
       poultry,
       neighborhood,
       cosher,
+      poultryNextMonth
     } = this.form.value;
     if (this.nzModalData) {
       await this.peopleService.repo.update(this.nzModalData.people.id, {
@@ -92,6 +95,7 @@ export class PeoplesModalComponent implements OnInit {
         poultry,
         neighborhood,
         cosher,
+        poultryNextMonth,
         phones: [phone, phone2 ? phone2 : '', phone3 ? phone3 : ''],
       });
       this.nzMessages.success('העדכון בוצע בהצלחה');
@@ -109,6 +113,7 @@ export class PeoplesModalComponent implements OnInit {
       poultry,
       neighborhood,
       cosher,
+      poultryNextMonth,
       phones: [phone, phone2 ? phone2 : '', phone3 ? phone3 : ''],
     });
     this.nzMessages.success('העדכון בוצע בהצלחה');
@@ -134,10 +139,11 @@ export class PeoplesModalComponent implements OnInit {
       // let obj:any[] = []
       data.forEach((row) => {
         (row.active = true),
+        row.cosherList = ((row.cosherList as unknown as string)?.split(',') as string[]).map(v => v.trim());
           (row.phones = [
-            `0${row.phone}`,
-            row.phone2 ? `0${row.phone2}` : '',
-            row.phone3 ? `0${row.phone3}` : '',
+            `${row.phone[0] === '0' ? row.phone : '0' + row.phone}`,
+            row.phone2 ? `${row.phone2[0] === '0' ? row.phone2 : '0' + row.phone2}` : '',
+            row.phone3 ? `${row.phone3[0] === '0' ? row.phone3 : '0' + row.phone3}` : '',
           ]);
       });
       const res = await PeopleController.importPeopleFromExcelFile(data);
@@ -164,11 +170,12 @@ export class PeoplesModalComponent implements OnInit {
 
       // let obj:any[] = []
       data.forEach((row) => {
-          (row.phones = [
-            `0${row.phone}`,
-            row.phone2 ? `0${row.phone2}` : '',
-            row.phone3 ? `0${row.phone3}` : '',
-          ]);
+        row.cosherList = ((row.cosherList as unknown as string)?.split(',') as string[]).map(v => v.trim());
+        (row.phones = [
+          `${row.phone[0] === '0' ? row.phone : '0' + row.phone}`,
+          row.phone2 ? `${row.phone2[0] === '0' ? row.phone2 : '0' + row.phone2}` : '',
+          row.phone3 ? `${row.phone3[0] === '0' ? row.phone3 : '0' + row.phone3}` : '',
+        ]);
       });
       const res = await PeopleController.updatePeopleFromExcelFile([...data]);
     };

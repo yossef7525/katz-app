@@ -49,6 +49,9 @@ export class People {
     
     @Fields.string()
     cosher?:string
+
+    @Fields.json()
+    cosherList?:string[]
     
     @Fields.number()
     order?:number

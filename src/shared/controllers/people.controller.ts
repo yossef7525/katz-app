@@ -17,7 +17,7 @@ export class PeopleController {
         for (let people of peoples) {
            try {
             
-              await repo.update(people.id, people)
+           await repo.update(people.id, people)
            } catch (error) {
             console.log('not updated');
             

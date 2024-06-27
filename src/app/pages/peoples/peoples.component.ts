@@ -76,7 +76,7 @@ export class PeoplesComponent {
     const fileName = 'נתמכים גומלי חסד.xlsx';
     const sheetName = 'נתמכים';
     if(forUpdate) {
-      const users = res.map(row => {return {...row, phones: row.phones[0], phone2: row.phones[1], phone3: row.phones[2] }})
+      const users = res.map(row => {return {...row, cosherList: row.cosherList?.join(','), phone: row.phones[0], phone2: row.phones[1], phone3: row.phones[2] }})
       const keys = Object.keys(users[0])
       this.reportService.createExcelFile([keys], users, fileName, sheetName);
       return
