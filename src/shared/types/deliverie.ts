@@ -6,7 +6,7 @@ import { Roles } from "./roles";
     allowApiCrud: Roles.User
 })
 export class Deliveries {
-    @Fields.autoIncrement()
+    @Fields.cuid()
     id!:string
 
     @Fields.string()
