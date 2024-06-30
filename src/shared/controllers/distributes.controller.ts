@@ -24,6 +24,7 @@ export class DistributesController {
       deliveries = [
         ...deliveries,
         {
+          id: p.id,
           people: p,
           peopleId: p.id,
           distributeId: `${newDistributes.id}`,
@@ -77,7 +78,7 @@ export class DistributesController {
       const res = await distributesRepo.update(distributeId, { archive: true });
       // reset poultryNextMonth
       peoplesRepo.updateMany({}, {poultryNextMonth: 0})
-      
+
       return res;
     } catch (error) {
       console.log(error);
