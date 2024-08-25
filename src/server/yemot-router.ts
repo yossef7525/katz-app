@@ -12,7 +12,7 @@ router.get('/details', async (call)=> {
         const message = !people ? 
         'מספר טלפון לא קיים במערכת'
         :
-        `להלן הפרטים כפי שמעודכנים במערכת: קוד אישי: ${people.id.split("")}: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם`
+        `להלן הפרטים כפי שמעודכנים במערכת: קוד אישי: ${people.id}: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם`
         return call.id_list_message([{type: 'text',removeInvalidChars: true,data: message}])
 })
 
@@ -33,7 +33,7 @@ router.get('/deliveryDetails', async(call) => {
         return call.id_list_message([{type: 'text',removeInvalidChars: true, data: `הנך זכאי לקבל בחלוקה הקרובה ${people?.poultry} עופות`}])
     }
     if(packInStack.status.length === 1){
-        return call.id_list_message([{type: 'text', removeInvalidChars: true, data: `המשלוח שלך הכולל ${packInStack.count} עופות - אושר - החלוקה תתחיל בימים הקרובים - ניתן להתעדכן בשלוחה 1` }])
+        return call.id_list_message([{type: 'text', removeInvalidChars: true, data: `המשלוח שלך הכולל ${packInStack.count} עופות, אושר, החלוקה תתחיל בימים הקרובים, ניתן להתעדכן בשלוחה 1` }])
     }
     const packIsDelivered = packInStack.status.findIndex(s => s.status === Statuses.Delivered) > -1
     const message = packIsDelivered ?
