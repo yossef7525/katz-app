@@ -8,7 +8,7 @@ export class CommentService {
     private repo = remult.repo(Comment)
     public comments = signal<Comment[]>([])
     async getComments(): Promise<Comment[]> {
-        const comments = await this.repo.find();
+        const comments = await this.repo.find({ where: { isDeleted: false } });
         this.comments.set(comments)
         return comments;
     }
@@ -16,6 +16,12 @@ export class CommentService {
     async setCompleted(comment: Comment, completed: boolean) {
         comment.complate = completed;
         await this.repo.save(comment)
-        this.comments.set(await this.repo.find())
+        this.comments.set(await this.repo.find({ where: { isDeleted: false } }))
     }
+    async deleteComment(comment: Comment) {
+        comment.isDeleted = true;
+        await this.repo.save(comment)
+        this.comments.set(await this.repo.find({ where: { isDeleted: false } }))
+    }
+
 }

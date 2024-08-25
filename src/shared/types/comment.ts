@@ -24,6 +24,9 @@ export class Comment{
 
     @Fields.createdAt()
     createdAt?:Date
+
+    @Fields.boolean()
+    isDeleted?:boolean
     call?:boolean
 }
 export class payload{

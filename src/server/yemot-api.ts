@@ -14,7 +14,7 @@ YemotRouts.get('/details', api.withRemult, async (req, res)=> {
     if(!people) {
         res.send("id_list_message=t-מספר טלפון לא קיים במערכת.&go_to_folder=/")
     } else {
-        const message = `id_list_message=t-להלן הפרטים כפי שמעודכנים במערכת: שם: ${people.firstName} ${people.lastName}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם.`
+        const message = `id_list_message=t-להלן הפרטים כפי שמעודכנים במערכת: שם: ${people.firstName} ${people.lastName}: קוד אישי: ${people.id}: כתובת: ${people.address}: בנין: ${people.building} קומה: ${people.floor.replaceAll('-', ' מינוס ')}: דירה: ${people.apartment}: מספר ילדים: ${people.children}: מספר עופות: ${people.poultry}: כשרות: ${people.cosher}: אלו הפרטים שמעודכנים אצלינו במידה וחלק מהפרטים לא נכונים אנא עדכן אותנו בהקדם.`
         res.send(message)
     }
 })

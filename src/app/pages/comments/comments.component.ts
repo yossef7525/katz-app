@@ -29,6 +29,21 @@ export class CommentsComponent implements OnInit{
       nzOnCancel: () => this.setCompleted(comment, completed, false),
     })
   }
+  confrimeDelete(comment: Comment){
+    this.nzModal.confirm({
+      nzTitle: 'האם אתה בטוח שתרצה למחוק את הפניה?',
+      nzOkText: 'כן',
+      nzCancelText: 'לא',
+      nzOnOk: ()=> this.deleteComment(comment),
+    })
+  }
+  async deleteComment(comment: Comment) {
+    const msg = this.nzMessage.loading("הפעולה מתבצעת...")
+    await this.commentService.deleteComment(comment)
+    
+    this.nzMessage.remove(msg.messageId)
+    this.nzMessage.success('הפניה נמחקה בהצלחה.')
+  }
   async setCompleted(comment: Comment, completed: boolean, call:boolean) {
     const msg = this.nzMessage.loading("הפעולה מתבצעת...")
     await CommentsController.setCompleted(comment, completed, call)

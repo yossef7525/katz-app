@@ -15,7 +15,7 @@ export class CommentsController{
             console.log(error); 
         }
     }
-    @BackendMethod({ allowed: Roles.Admin })
+    @BackendMethod({ allowed: Roles.Admin , paramTypes: () => [Comment]})
     static async sendNotificationCompleted(comment: Comment) {
         if(comment.complate) return;
         try {
@@ -24,5 +24,4 @@ export class CommentsController{
             console.log(error); 
         }
     }
-    
 }

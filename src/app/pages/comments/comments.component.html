@@ -1,8 +1,7 @@
 <div class="flex flex-wrap gap-5 m-5">
     <ng-container *ngFor="let comment of comments()">
-        <nz-card style="width:300px;">
+        <nz-card [nzTitle]="comment.comment" style="width:300px;" [nzExtra]="extraTemplate">
             <nz-card-meta
-            nzTitle="{{comment.comment}}"
             nzDescription="{{(comment.peopleId || '') | UserName | async}}"
             ></nz-card-meta>
             <ng-container *ngFor="let payload of comment.payload">
@@ -14,15 +13,18 @@
                 <label nz-radio-button  [nzValue]="false">לא טופל</label>
               </nz-radio-group>
               <button class="my-3 mx-auto" nz-button (click)="sendStartWorkNotification(comment)">שלח הודעה על התחלת טיפול</button>
-        </nz-card>
+       
+              <ng-template #extraTemplate>
+                    <span (click)="confrimeDelete(comment)" class="isax isax-trash text-2xl text-red-500 cursor-pointer"></span>
+              </ng-template>
+            </nz-card>
     </ng-container>
 </div>
 <nz-divider nzText="פניות שטופלו"></nz-divider>
 <div class="flex flex-wrap gap-5 m-5">
     <ng-container *ngFor="let comment of commentsComplete()">
-        <nz-card style="width:300px;">
+        <nz-card [nzTitle]="comment.comment" style="width:300px;" [nzExtra]="extraTemplate">
             <nz-card-meta
-            nzTitle="{{comment.comment}}"
             nzDescription="{{(comment.peopleId || '') | UserName | async}}"
             ></nz-card-meta>
             <ng-container *ngFor="let payload of comment.payload">
@@ -33,6 +35,9 @@
                 <label nz-radio-button  [nzValue]="true" [nzDisabled]="true">טופל</label>
                 <label nz-radio-button  [nzValue]="false">לא טופל</label>
               </nz-radio-group>
+              <ng-template #extraTemplate>
+                <span (click)="confrimeDelete(comment)" class="isax isax-trash text-2xl text-red-500 cursor-pointer"></span>
+          </ng-template>
         </nz-card>
     </ng-container>
 </div>
