@@ -65,7 +65,7 @@ export class People {
     static userNameFilter = Filter.createCustom<People, {query:string}>(
         async ({query}) => {
         return ArrayEntityDataProvider.rawFilter((user:any) => {
-         return user.group !== '' && `${user.lastName} ${user.firstName}`.includes(query)
+         return `${user.lastName} ${user.firstName}`.includes(query) || `${user.id}`.includes(query)
         })
       });
 }

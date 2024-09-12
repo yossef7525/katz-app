@@ -1,9 +1,11 @@
 import { Component, OnInit, computed, effect } from '@angular/core';
-import { Comment } from '../../../shared/types';
+import { Comment, People } from '../../../shared/types';
 import { CommentService } from '../../services/comment.service';
 import { CommentsController } from '../../../shared/controllers/comments.controller';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { PeoplesModalComponent } from '../../components/peoples-modal/peoples-modal.component';
+import { PoepleService } from '../../services/poeple.service';
 
 @Component({
   selector: 'app-comments',
@@ -13,7 +15,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class CommentsComponent implements OnInit{
   comments = computed(() => this.commentService.comments().filter(c => !c.complate))
   commentsComplete = computed(() => this.commentService.comments().filter(c => c.complate))
-  constructor(private commentService: CommentService, private nzMessage:NzMessageService, private nzModal:NzModalService) {}
+  constructor(private commentService: CommentService, private peopleService:PoepleService, private nzMessage:NzMessageService, private nzModal:NzModalService) {}
   ngOnInit(): void {
     this.commentService.getComments()
   }
@@ -54,5 +56,16 @@ export class CommentsComponent implements OnInit{
   sendStartWorkNotification(comment:Comment){
     CommentsController.sendNotificationCompleted(comment)
     this.nzMessage.success("הודעה על התחלת טיפול נשלחה בהצלחה")
+  }
+
+  async openPeopleModalEditMode(peopleId: string) {
+    const people = await this.peopleService.getPeopleById(peopleId)
+    if(!people) return;
+    this.nzModal.create({
+      nzContent: PeoplesModalComponent,
+      nzTitle: `פרטי נתמך (${peopleId})`,
+      nzData: { people },
+      nzFooter: null,
+    });
   }
 }

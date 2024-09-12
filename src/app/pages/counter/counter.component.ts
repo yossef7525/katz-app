@@ -19,7 +19,7 @@ export class CounterComponent implements OnInit {
   firstLoaded:boolean = false
   async ngOnInit(): Promise<void> {
     this.deliveriesRepo
-      .liveQuery({ orderBy: { updatedAt: 'desc' } })
+      .liveQuery({ include: {people: true}, orderBy: { updatedAt: 'desc'},  })
       .subscribe((info: LiveQueryChangeInfo<Deliveries>) => {
         const deliveries = info.items.filter(
           (item) =>

@@ -1,9 +1,11 @@
 <div class="flex flex-wrap gap-5 m-5">
     <ng-container *ngFor="let comment of comments()">
         <nz-card [nzTitle]="comment.comment" style="width:300px;" [nzExtra]="extraTemplate">
-            <nz-card-meta
+            <!-- <nz-card-meta
+            (click)="openPeopleModalEditMode(comment.people)"
             nzDescription="{{(comment.peopleId || '') | UserName | async}}"
-            ></nz-card-meta>
+            ></nz-card-meta> -->
+            <p (click)="openPeopleModalEditMode(comment.peopleId || '')"><b>שם הנתמך:</b> {{(comment.peopleId || '') | UserName | async}}</p>
             <ng-container *ngFor="let payload of comment.payload">
                 <p><b>{{payload.key}}:</b> {{payload.value}}</p>
             </ng-container>
@@ -24,9 +26,7 @@
 <div class="flex flex-wrap gap-5 m-5">
     <ng-container *ngFor="let comment of commentsComplete()">
         <nz-card [nzTitle]="comment.comment" style="width:300px;" [nzExtra]="extraTemplate">
-            <nz-card-meta
-            nzDescription="{{(comment.peopleId || '') | UserName | async}}"
-            ></nz-card-meta>
+            <p (click)="openPeopleModalEditMode(comment.peopleId || '')"><b>שם הנתמך:</b> {{(comment.peopleId || '') | UserName | async}}</p>
             <ng-container *ngFor="let payload of comment.payload">
                 <p><b>{{payload.key}}:</b> {{payload.value}}</p>
             </ng-container>

@@ -11,6 +11,6 @@ export class UserNamePipe implements PipeTransform {
   transform(userId: string, args?: any): Observable<string | undefined> {
     if (!userId) return of(undefined);
 
-    return this.peopleService.getPeopleByIdAsync(userId).pipe(map(user => `${user?.lastName} ${user?.firstName}`));
+    return this.peopleService.getPeopleByIdAsync(userId).pipe(map(user => user ? `${user?.lastName} ${user?.firstName}` : 'לא נמצא'));
   }
 }

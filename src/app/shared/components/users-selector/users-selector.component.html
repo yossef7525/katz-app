@@ -10,7 +10,7 @@ nzServerSearch
 (ngModelChange)="onChangeSelected()"
 >
     <ng-container *ngFor="let user of users">
-        <nz-option *ngIf="!isLoading" nzValue="{{user.id}}" nzLabel="{{user.lastName}} {{user.firstName}}"></nz-option>
+        <nz-option *ngIf="!isLoading" nzValue="{{user.id}}" nzLabel="{{user.lastName}} {{user.firstName}} ({{user.id}})"></nz-option>
       </ng-container>
       <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
         <span nz-icon nzType="loading" class="loading-icon"></span>
