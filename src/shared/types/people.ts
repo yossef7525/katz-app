@@ -51,7 +51,10 @@ export class People {
     cosher?:string
 
     @Fields.json()
-    cosherList?:string[]
+    cosherListOneLevel?:string[]
+    
+    @Fields.json()
+    cosherListTwoLevel?:string[]
     
     @Fields.number()
     order?:number

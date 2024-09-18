@@ -7,6 +7,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import * as XLSX from 'xlsx';
 import { PeopleController } from '../../../shared/controllers/people.controller';
 import { ReportService } from '../../services/reports.service';
+import { CosherListOneLevel, CosherListTwoLevel } from '../../shared/types';
 
 interface IModalData {
   people: People;
@@ -33,7 +34,8 @@ export class PeoplesModalComponent implements OnInit {
     private nzMessages: NzMessageService,
     private reportService: ReportService
   ) {}
-
+cosherOneLevelOptions = CosherListOneLevel;
+cosherTwoLevelOptions = CosherListTwoLevel;
   ngOnInit(): void {
     const {
       firstName,
@@ -47,6 +49,8 @@ export class PeoplesModalComponent implements OnInit {
       poultry,
       neighborhood,
       cosher,
+      cosherListOneLevel,
+      cosherListTwoLevel,
       poultryNextMonth
     } = this.nzModalData?.people || '';
     this.form = this.fb.group({
@@ -63,6 +67,8 @@ export class PeoplesModalComponent implements OnInit {
       poultry: [poultry || '', [Validators.required]],
       neighborhood: [neighborhood || '', [Validators.required]],
       cosher: [cosher || '', [Validators.required]],
+      cosherListOneLevel: [cosherListOneLevel, [Validators.required]],
+      cosherListTwoLevel: [cosherListTwoLevel, [Validators.required]],
       poultryNextMonth: [poultryNextMonth || '', [Validators.required]],
     });
   }
@@ -81,6 +87,8 @@ export class PeoplesModalComponent implements OnInit {
       poultry,
       neighborhood,
       cosher,
+      cosherListOneLevel,
+      cosherListTwoLevel,
       poultryNextMonth
     } = this.form.value;
     if (this.nzModalData) {
@@ -95,6 +103,8 @@ export class PeoplesModalComponent implements OnInit {
         poultry,
         neighborhood,
         cosher,
+        cosherListOneLevel,
+        cosherListTwoLevel,
         poultryNextMonth,
         phones: [phone, phone2 ? phone2 : '', phone3 ? phone3 : ''],
       });
@@ -113,6 +123,8 @@ export class PeoplesModalComponent implements OnInit {
       poultry,
       neighborhood,
       cosher,
+      cosherListOneLevel,
+      cosherListTwoLevel,
       poultryNextMonth,
       phones: [phone, phone2 ? phone2 : '', phone3 ? phone3 : ''],
     });
@@ -139,7 +151,8 @@ export class PeoplesModalComponent implements OnInit {
       // let obj:any[] = []
       data.forEach((row) => {
         (row.active = true),
-        row.cosherList = ((row.cosherList as unknown as string)?.split(',') as string[]).map(v => v.trim());
+        row.cosherListOneLevel = ((row.cosherListOneLevel as unknown as string)?.split(',') as string[]).map(v => v.trim());
+        row.cosherListTwoLevel = ((row.cosherListTwoLevel as unknown as string)?.split(',') as string[]).map(v => v.trim());
           (row.phones = [
             `${row.phone[0] === '0' ? row.phone : '0' + row.phone}`,
             row.phone2 ? `${row.phone2[0] === '0' ? row.phone2 : '0' + row.phone2}` : '',
@@ -170,7 +183,8 @@ export class PeoplesModalComponent implements OnInit {
 
       // let obj:any[] = []
       data.forEach((row) => {
-        row.cosherList = ((row.cosherList as unknown as string)?.split(',') as string[]).map(v => v.trim());
+        row.cosherListOneLevel = ((row.cosherListOneLevel as unknown as string)?.split(',') as string[]).map(v => v.trim());
+        row.cosherListTwoLevel = ((row.cosherListTwoLevel as unknown as string)?.split(',') as string[]).map(v => v.trim());
         (row.phones = [
           `${row.phone[0] === '0' ? row.phone : '0' + row.phone}`,
           row.phone2 ? `${row.phone2[0] === '0' ? row.phone2 : '0' + row.phone2}` : '',

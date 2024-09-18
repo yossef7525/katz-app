@@ -7,7 +7,6 @@ import { PoepleService } from "./poeple.service";
 export class CommentService {
     constructor(private peopleService:PoepleService) { }
     private repo = remult.repo(Comment)
-    private peopleRepo = remult.repo(People)
     public comments = signal<Comment[]>([])
     async getComments(): Promise<Comment[]> {
         const comments = await this.repo.find({ where: { isDeleted: false } });
