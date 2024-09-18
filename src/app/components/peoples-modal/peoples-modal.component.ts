@@ -151,8 +151,8 @@ cosherTwoLevelOptions = CosherListTwoLevel;
       // let obj:any[] = []
       data.forEach((row) => {
         (row.active = true),
-        row.cosherListOneLevel = ((row.cosherListOneLevel as unknown as string)?.split(',') as string[]).map(v => v.trim());
-        row.cosherListTwoLevel = ((row.cosherListTwoLevel as unknown as string)?.split(',') as string[]).map(v => v.trim());
+        row.cosherListOneLevel = ((row.cosherListOneLevel as unknown as string)?.split(',') as string[])?.map(v => v.trim());
+        row.cosherListTwoLevel = ((row.cosherListTwoLevel as unknown as string)?.split(',') as string[])?.map(v => v.trim());
           (row.phones = [
             `${row.phone[0] === '0' ? row.phone : '0' + row.phone}`,
             row.phone2 ? `${row.phone2[0] === '0' ? row.phone2 : '0' + row.phone2}` : '',
