@@ -2,7 +2,7 @@ import { Injectable, OnInit, signal } from '@angular/core';
 import { People } from '../../shared/types';
 import { Observable, from } from 'rxjs';
 import { BaseStateService } from './base-state.service';
-import { remult } from '../../shared/remult';
+import { remult } from 'remult';
 
 @Injectable({
   providedIn: 'root'

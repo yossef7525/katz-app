@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserRoles } from '../../../../../shared/types/user-roles';
 import { AddUserModalComponent } from '../../components/code-modal/add-user-modal.component';
-import { remult } from '../../../../../shared/remult';
+import { remult } from 'remult';
 
 @Component({
   selector: 'app-users-table',

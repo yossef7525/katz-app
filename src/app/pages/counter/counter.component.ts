@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Deliveries, People, Statuses } from '../../../shared/types';
-import { LiveQueryChangeInfo, remult } from '../../../shared/remult';
+import { LiveQueryChangeInfo, remult } from 'remult';
 
 @Component({
   selector: 'app-counter',

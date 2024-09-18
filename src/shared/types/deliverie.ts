@@ -1,4 +1,4 @@
-import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "../remult";
+import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "remult";
 import { People } from "./people";
 import { Roles } from "./roles";
 

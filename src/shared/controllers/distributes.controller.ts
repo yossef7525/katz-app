@@ -1,7 +1,7 @@
 import { Distributes } from '../types/distributes';
 import { Deliveries, People, Statuses } from '../types';
 import { Archive } from '../types/archive';
-import { BackendMethod, EntityFilter, MembersOnly, remult } from '../remult';
+import { BackendMethod, EntityFilter, MembersOnly, remult } from 'remult';
 import { Roles } from '../types/roles';
 
 const distributesRepo = remult.repo(Distributes);
@@ -104,7 +104,7 @@ export class DistributesController {
   @BackendMethod({allowed: true})
   static async setDeliveried(options:{isDeliveried:boolean, id:string}){
     
-    const del = await deliveriesRepo.findOne({where: {id:options.id}})
+    const del = await deliveriesRepo.findOne({where: {id:options.id}}) as Deliveries
 
     if(options.isDeliveried){
       if(del.status.findIndex(s => s.status === Statuses.Delivered) > -1) return;

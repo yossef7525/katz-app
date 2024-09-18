@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { UserInfo, remult } from "../../shared/remult";
+import { UserInfo, remult } from "remult";
 
 @Injectable({
   providedIn: 'root'

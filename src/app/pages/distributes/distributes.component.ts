@@ -3,7 +3,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { DistributesController } from '../../../shared/controllers/distributes.controller';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Distributes } from '../../../shared/types/distributes';
-import { remult } from '../../../shared/remult';
+import { remult } from 'remult';
 
 @Component({
   selector: 'app-distributes',

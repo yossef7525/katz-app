@@ -1,4 +1,4 @@
-import { Entity } from "../remult";
+import { Entity } from "remult";
 import { Deliveries } from "./deliverie";
 import { Roles } from "./roles";
 

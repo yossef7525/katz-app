@@ -3,7 +3,7 @@
 import { Component, OnInit } from "@angular/core"
 import { HttpClient } from "@angular/common/http"
 import { UserRoles } from "../../../shared/types/user-roles"
-import { UserInfo, remult } from "../../../shared/remult"
+import { UserInfo, remult } from "remult"
 
 @Component({
   selector: "app-login",

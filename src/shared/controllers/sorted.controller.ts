@@ -1,4 +1,4 @@
-import { BackendMethod, remult } from '../remult';
+import { BackendMethod, remult } from 'remult';
 import { People } from '../types';
 import { Roles } from '../types/roles';
 
