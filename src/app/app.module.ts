@@ -28,6 +28,7 @@ import { DistributesModalComponent } from './components/distributes-modal/distri
 import { LoginComponent } from './pages/login/login.component';
 import { StatusTableComponent } from './components/status-table/status-table.component';
 import { CommentsComponent } from './pages/comments/comments.component';
+import { ScannerComponent } from './pages/scanner/scanner.component';
 
 
 registerLocaleData(he);
@@ -47,7 +48,8 @@ registerLocaleData(he);
     DistributesModalComponent,
     LoginComponent,
     StatusTableComponent,
-    CommentsComponent
+    CommentsComponent,
+    ScannerComponent
   ],
   imports: [
     BrowserModule,

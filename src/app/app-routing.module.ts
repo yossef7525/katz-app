@@ -7,6 +7,7 @@ import { SortedComponent } from './pages/sorted/sorted.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { CommentsComponent } from './pages/comments/comments.component';
+import { ScannerComponent } from './pages/scanner/scanner.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/peoples', pathMatch: 'full'},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'distributes', component:DistributesComponent, canActivate:[AuthGuard]},
   {path: 'sorted', component:SortedComponent, canActivate:[AuthGuard]},
   {path: 'comments', component:CommentsComponent, canActivate:[AuthGuard]},
+  {path: 'scanner', component: ScannerComponent, canActivate:[AuthGuard]},
   { path: 'login-page', component: LoginComponent },
   {
     path: 'auth',
