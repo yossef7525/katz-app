@@ -2,7 +2,6 @@ import { BackendMethod, remult } from 'remult';
 import { People } from '../types';
 import { SheetFields } from '../types/sheet-fields';
 import * as _ from 'lodash';
-import { active } from 'sortablejs';
 
 const sheetEndpoint =
   'https://opensheet.elk.sh/1ech-KXV6ucEqGhFhFTG9Tz-Ud4XQlR_a0_TQAaVN2G8/%D7%92%D7%99%D7%9C%D7%99%D7%95%D7%9F1!d2:AJ14989';
