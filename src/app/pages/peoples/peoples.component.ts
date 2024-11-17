@@ -6,6 +6,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { People } from '../../../shared/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ReportService } from '../../services/reports.service';
+import { SheetSyncController } from '../../../shared/controllers/sheet-sync.controller';
 
 @Component({
   selector: 'app-peoples',
@@ -17,6 +18,7 @@ export class PeoplesComponent {
   pageSize = 10;
   pageIndex = 1;
   searchToremId!: string[];
+  syncSheetLoading = false;
   constructor(
     public peopleService: PoepleService,
     private modal: NzModalService,
@@ -85,4 +87,13 @@ export class PeoplesComponent {
       firstName, lastName, neighborhood, address, building,floor, apartment,  phones: phones ? phones[0] : '', children, poultry, cosher}));
       this.reportService.createExcelFile(heading, users, fileName, sheetName);
   }
+
+ async syncFromSheet() {
+  this.syncSheetLoading = true;
+   const m = this.message.loading('הסנכרון מתבצע, הפעולה יכולה לקחת זמן!');
+    const count = await SheetSyncController.syncSheet();
+    this.message.remove(m.messageId);
+    this.message.success(`הפעולה הושלמה בהצלחה! עודכנו ${count.updatedCount} נתמכים, והתווספו ${count.newCount} נתמכים חדשים`);
+    this.syncSheetLoading = false;
+}
 }

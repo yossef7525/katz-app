@@ -21,7 +21,7 @@ export class People {
     address!:string
     
     @Fields.string()
-    neighborhood!:string
+    neighborhood?:string
    
     @Fields.string()
     building!:string

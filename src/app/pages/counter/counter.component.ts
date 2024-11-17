@@ -27,7 +27,7 @@ export class CounterComponent implements OnInit {
         );
         this.familyCounter = deliveries.length;
         this.poultryCounter = deliveries.reduce(
-          (a, b) => a + (b.count || 0),
+          (a, b) => a + (b.count || 0) + 2,
           0
         );
         this.deliveriesCounter = info.items.length - deliveries.length;

@@ -30,6 +30,14 @@
       >
         ייצא לעדכון
       </button>
+      <button
+        nz-button
+        nzType="primary"
+        class="w-fit my-5"
+        (click)="syncFromSheet()"
+      >
+        הרץ סנכרון מדרייב
+      </button>
     </div>
   </div>
 
@@ -76,12 +84,12 @@
         <ng-container *ngFor="let data of table.data; let i = index">
           <tr (click)="openPeopleModalEditMode(data)">
             <td
-          nzWidth="40px"
-          nzAlign="center"
-          [nzChecked]="data.active ?? false"
-          [nzDisabled]="false"
-          (nzCheckedChange)="setActiveUser($event, i)"
-        ></td>
+              nzWidth="40px"
+              nzAlign="center"
+              [nzChecked]="data.active ?? false"
+              [nzDisabled]="false"
+              (nzCheckedChange)="setActiveUser($event, i)"
+            ></td>
             <td>{{ data.lastName }} {{ data.firstName }}</td>
             <td>{{ data.phones && data.phones[0] ? data.phones[0] : "" }}</td>
             <td>{{ data.phones && data.phones[1] ? data.phones[1] : "" }}</td>

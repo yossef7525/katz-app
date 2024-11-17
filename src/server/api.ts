@@ -9,9 +9,10 @@ import { AuthController } from '../shared/controllers/auth.controller'
 import { PeopleController } from '../shared/controllers/people.controller'
 import {Comment} from '../shared/types'
 import { CommentsController } from '../shared/controllers/comments.controller'
+import { SheetSyncController } from '../shared/controllers/sheet-sync.controller'
 
 export const api = remultExpress({
     getUser: req => req.session!["user"],
     entities: [People, Deliveries, Distributes, Archive, UserRoles, Comment],
-    controllers: [DistributesController, SortedController, AuthController, PeopleController, CommentsController]
+    controllers: [DistributesController, SortedController, AuthController, PeopleController, CommentsController, SheetSyncController]
 })
