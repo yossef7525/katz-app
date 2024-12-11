@@ -97,6 +97,5 @@ router.get('/Building', async (call) => {
     }
 })
 
-
 export default router
 
