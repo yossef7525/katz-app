@@ -144,10 +144,12 @@ YemotRouts.post('/getYemotToken', async (req, res) => {
     const {guid} = req.body;
     if(guid !== 'd57c96dd-74bc-439c-a954-29a0d0ef691c') {
         res.sendStatus(403)
+        return;
     }
     const resFromYemot = await (await fetch('https://www.call2all.co.il/ym/api/Login?username=023137470&password=5386')).json();
     if(!resFromYemot.token) {
         res.sendStatus(500)
+        return;
     }
 
     res.send(resFromYemot.token)
