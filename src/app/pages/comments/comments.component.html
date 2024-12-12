@@ -1,45 +1,108 @@
 <div class="flex flex-wrap gap-5 m-5">
-    <ng-container *ngFor="let comment of comments()">
-        <nz-card [nzTitle]="comment.comment" style="width:300px;" [nzExtra]="extraTemplate">
-            <!-- <nz-card-meta
+  <ng-container *ngFor="let comment of comments()">
+    <nz-card
+      [nzTitle]="comment.comment"
+      style="width: 300px"
+      [nzExtra]="extraTemplate"
+    >
+      <!-- <nz-card-meta
             (click)="openPeopleModalEditMode(comment.people)"
             nzDescription="{{(comment.peopleId || '') | UserName | async}}"
             ></nz-card-meta> -->
-            <p (click)="openPeopleModalEditMode(comment.peopleId || '')"><b>שם הנתמך:</b> {{(comment.peopleId || '') | UserName | async}}</p>
-            <ng-container *ngFor="let payload of comment.payload">
-                <p><b>{{payload.key}}:</b> {{payload.value}}</p>
-            </ng-container>
-            <p><b>עודכן מטלפון:</b> {{comment.phoneUpdate}}</p>
-            <p><b>עודכן בתאריך:</b> {{comment.createdAt | date : 'dd/MM/yyyy HH:mm'}}</p>
-            <nz-radio-group  [(ngModel)]="comment.complate" nzButtonStyle="solid" (ngModelChange)="confrimeCompleted(comment, $event)">
-                <label nz-radio-button  [nzValue]="true">טופל</label>
-                <label nz-radio-button  [nzValue]="false">לא טופל</label>
-              </nz-radio-group>
-              <button class="my-3 mx-auto" nz-button (click)="sendStartWorkNotification(comment)">שלח הודעה על התחלת טיפול</button>
-       
-              <ng-template #extraTemplate>
-                    <span (click)="confrimeDelete(comment)" class="isax isax-trash text-2xl text-red-500 cursor-pointer"></span>
-              </ng-template>
-            </nz-card>
-    </ng-container>
+      <p (click)="openPeopleModalEditMode(comment.peopleId || '')">
+        <b>שם הנתמך:</b> {{ comment.peopleId || "" | UserName | async }}
+      </p>
+      <ng-container *ngFor="let payload of comment.payload">
+        <p>
+          <b>{{ payload.key }}:</b> {{ payload.value }}
+        </p>
+      </ng-container>
+      <p><b>עודכן מטלפון:</b> {{ comment.phoneUpdate }}</p>
+      <p>
+        <b>עודכן בתאריך:</b> {{ comment.createdAt | date : "dd/MM/yyyy HH:mm" }}
+      </p>
+      <nz-radio-group
+        [(ngModel)]="comment.complate"
+        nzButtonStyle="solid"
+        (ngModelChange)="confrimeCompleted(comment, $event)"
+      >
+        <label nz-radio-button [nzValue]="true">טופל</label>
+        <label nz-radio-button [nzValue]="false">לא טופל</label>
+      </nz-radio-group>
+      <div *ngIf="comment.inProgress" class="my-3">
+        <nz-tag nzColor="blue" class="my-3 mx-auto"
+          >בטיפול ע"י {{ comment.treatedBy }}</nz-tag
+        >
+      </div>
+      <button
+        *ngIf="!comment.inProgress"
+        class="my-3 mx-auto"
+        nz-button
+        (click)="confrimeStartWork(comment)"
+      >
+        שלח הודעה על התחלת טיפול
+      </button>
+      <ng-template #extraTemplate>
+        <span
+          (click)="confrimeDelete(comment)"
+          class="isax isax-trash text-2xl text-red-500 cursor-pointer"
+        ></span>
+      </ng-template>
+    </nz-card>
+  </ng-container>
 </div>
 <nz-divider nzText="פניות שטופלו"></nz-divider>
 <div class="flex flex-wrap gap-5 m-5">
-    <ng-container *ngFor="let comment of commentsComplete()">
-        <nz-card [nzTitle]="comment.comment" style="width:300px;" [nzExtra]="extraTemplate">
-            <p (click)="openPeopleModalEditMode(comment.peopleId || '')"><b>שם הנתמך:</b> {{(comment.peopleId || '') | UserName | async}}</p>
-            <ng-container *ngFor="let payload of comment.payload">
-                <p><b>{{payload.key}}:</b> {{payload.value}}</p>
-            </ng-container>
-            <p><b>עודכן מטלפון:</b> {{comment.phoneUpdate}}</p>
-            <p><b>עודכן בתאריך:</b> {{comment.createdAt | date : 'dd/MM/yyyy HH:mm'}}</p>
-            <nz-radio-group  [(ngModel)]="comment.complate" nzButtonStyle="solid" (ngModelChange)="setCompleted(comment, $event, false)">
-                <label nz-radio-button  [nzValue]="true" [nzDisabled]="true">טופל</label>
-                <label nz-radio-button  [nzValue]="false">לא טופל</label>
-              </nz-radio-group>
-              <ng-template #extraTemplate>
-                <span (click)="confrimeDelete(comment)" class="isax isax-trash text-2xl text-red-500 cursor-pointer"></span>
-          </ng-template>
-        </nz-card>
-    </ng-container>
+  <ng-container *ngFor="let comment of commentsComplete()">
+    <nz-card
+      [nzTitle]="comment.comment"
+      style="width: 300px"
+      [nzExtra]="extraTemplate"
+    >
+      <p (click)="openPeopleModalEditMode(comment.peopleId || '')">
+        <b>שם הנתמך:</b> {{ comment.peopleId || "" | UserName | async }}
+      </p>
+      <ng-container *ngFor="let payload of comment.payload">
+        <p>
+          <b>{{ payload.key }}:</b> {{ payload.value }}
+        </p>
+      </ng-container>
+      <p><b>עודכן מטלפון:</b> {{ comment.phoneUpdate }}</p>
+      <p>
+        <b>עודכן בתאריך:</b> {{ comment.createdAt | date : "dd/MM/yyyy HH:mm" }}
+      </p>
+      <nz-radio-group
+        [(ngModel)]="comment.complate"
+        nzButtonStyle="solid"
+        (ngModelChange)="setCompleted(comment, $event, false)"
+      >
+        <label nz-radio-button [nzValue]="true" [nzDisabled]="true">טופל</label>
+        <label nz-radio-button [nzValue]="false">לא טופל</label>
+      </nz-radio-group>
+      <ng-template #extraTemplate>
+        <span
+          (click)="confrimeDelete(comment)"
+          class="isax isax-trash text-2xl text-red-500 cursor-pointer"
+        ></span>
+      </ng-template>
+    </nz-card>
+  </ng-container>
 </div>
+
+<ng-template #selectTearetd>
+  <div class="w-full">
+    <nz-select
+    class="w-full"
+      [(ngModel)]="selectedTearetd"
+      nzShowSearch
+      nzAllowClear
+      nzPlaceHolder="מטופל ע''י"
+    >
+      <nz-option
+        *ngFor="let tearetd of treateds"
+        [nzLabel]="tearetd"
+        [nzValue]="tearetd"
+      ></nz-option>
+    </nz-select>
+  </div>
+</ng-template>

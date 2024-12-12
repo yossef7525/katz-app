@@ -73,7 +73,7 @@ export class SheetSyncController {
           floor: people[SheetFields.Floor],
           apartment: people[SheetFields.House],
           poultry:
-            people[SheetFields.Poultry] - (people[SheetFields.PoultrySub] || 0),
+            people[SheetFields.Poultry],
           phones: [
             addLeadingZero(people[SheetFields.PhoneMain]),
             addLeadingZero(people[SheetFields.Phone]),

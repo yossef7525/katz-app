@@ -22,8 +22,14 @@ export class Comment{
     @Fields.boolean()
     complate?:boolean
 
+    @Fields.boolean()
+    inProgress?:boolean
+
     @Fields.createdAt()
     createdAt?:Date
+
+    @Fields.string()
+    treatedBy?:string
 
     @Fields.boolean()
     isDeleted?:boolean

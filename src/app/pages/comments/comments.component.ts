@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, effect } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, computed, effect } from '@angular/core';
 import { Comment, People } from '../../../shared/types';
 import { CommentService } from '../../services/comment.service';
 import { CommentsController } from '../../../shared/controllers/comments.controller';
@@ -13,8 +13,11 @@ import { PoepleService } from '../../services/poeple.service';
   styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnInit{
+  @ViewChild('selectTearetd') selectTearetd!: TemplateRef<HTMLElement>
   comments = computed(() => this.commentService.comments().filter(c => !c.complate))
   commentsComplete = computed(() => this.commentService.comments().filter(c => c.complate))
+  treateds = ['חיים מאיר פרנקל', 'חיים וינגרטן', 'שלמה וינגרטן', 'אליעזר חשין']
+  selectedTearetd = ''
   constructor(private commentService: CommentService, private peopleService:PoepleService, private nzMessage:NzMessageService, private nzModal:NzModalService) {}
   ngOnInit(): void {
     this.commentService.getComments()
@@ -53,11 +56,30 @@ export class CommentsComponent implements OnInit{
     this.nzMessage.remove(msg.messageId)
     this.nzMessage.success('הפניה סומנה כטופל.')
   }
-  sendStartWorkNotification(comment:Comment){
-    CommentsController.sendNotificationCompleted(comment)
+  async sendStartWorkNotification(comment:Comment){
+    await this.commentService.sendStartWorkNotification(comment)
     this.nzMessage.success("הודעה על התחלת טיפול נשלחה בהצלחה")
+    this.selectedTearetd = ''
   }
 
+  confrimeStartWork(comment: Comment){
+    this.nzModal.confirm({
+      nzTitle: 'מי מטפל בפניה שבחרת?',
+      nzContent: this.selectTearetd,
+      nzOkText: 'שלח צינתוק',
+      nzCancelText: 'ביטול',
+      nzOnOk: () => {
+        if(!this.selectedTearetd) {
+          this.nzMessage.error("יש לבחור מי מטפל בפניה!")
+          return;
+        };
+        this.sendStartWorkNotification({...comment, inProgress: true, treatedBy: this.selectedTearetd})
+      },
+    })
+  }
+ onSelectedTearetdChange(treated: string){
+    this.selectedTearetd = treated
+ }
   async openPeopleModalEditMode(peopleId: string) {
     const people = await this.peopleService.getPeopleById(peopleId)
     if(!people) return;

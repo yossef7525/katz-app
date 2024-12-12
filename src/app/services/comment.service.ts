@@ -2,6 +2,7 @@ import { Injectable, signal } from "@angular/core";
 import { remult } from "remult";
 import { Comment, People } from "../../shared/types";
 import { PoepleService } from "./poeple.service";
+import { CommentsController } from "../../shared/controllers/comments.controller";
 
 @Injectable({ providedIn: 'root' })
 export class CommentService {
@@ -24,6 +25,11 @@ export class CommentService {
         comment.isDeleted = true;
         await this.repo.save(comment)
         this.comments.set(await this.repo.find({ where: { isDeleted: false } }))
+    }
+
+    async sendStartWorkNotification(comment: Comment) {
+        this.comments.update(c => c.map(c => c.id === comment.id ? comment : c));
+        await CommentsController.sendNotificationCompleted(comment)
     }
 
 }
