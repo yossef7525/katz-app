@@ -29,14 +29,13 @@ async function syncSheetData(peoplesFromServer: People[]) {
   const updatedPeoples = peoplesFromSheet.filter((p: any) =>
     idsExist.includes(p[SheetFields.Id])
   );
-  
+
   const newPeoples = peoplesFromSheet.filter(
-      (p: any) => p[SheetFields.Id] && !idsExist.includes(p[SheetFields.Id])
+    (p: any) => p[SheetFields.Id] && !idsExist.includes(p[SheetFields.Id])
   );
 
-  let newCount = 0;
-
-  for (let people of newPeoples) {
+  // טיפול בנתונים חדשים בצורה מקבילה
+  const newPeoplePromises = newPeoples.map(async (people:any) => {
     try {
       const peopleNew = {
         id: people[SheetFields.Id],
@@ -56,20 +55,23 @@ async function syncSheetData(peoplesFromServer: People[]) {
         ],
         children: Number(people[SheetFields.Children]),
         gabaiCode: people[SheetFields.CodeGabay],
-        poultryNextMonth:  Number(people[SheetFields.poultryNextMonth]) || 0
+        poultryNextMonth: Number(people[SheetFields.poultryNextMonth]) || 0,
       };
       await repo.insert(peopleNew);
-      newCount++;
+      return true;
     } catch (error) {
-      console.log(people.id, ': not inserted');
+      console.log(people[SheetFields.Id], ': not inserted');
+      return false;
     }
-  }
+  });
 
-  let updatedCount = 0;
-  for (let people of updatedPeoples) {
+  const newCount = (await Promise.all(newPeoplePromises)).filter(Boolean).length;
+
+  // טיפול בעדכונים בצורה מקבילה
+  const updatedPeoplePromises = updatedPeoples.map(async (people:any) => {
     try {
       const orgPeople = peoplesFromServer.find(
-        (p) => p.id == people[SheetFields.Id]
+        (p) => p.id === people[SheetFields.Id]
       );
       const peopleUpdate = {
         id: people[SheetFields.Id],
@@ -79,8 +81,7 @@ async function syncSheetData(peoplesFromServer: People[]) {
         building: people[SheetFields.Building],
         floor: people[SheetFields.Floor],
         apartment: people[SheetFields.House],
-        poultry:
-          people[SheetFields.Poultry],
+        poultry: people[SheetFields.Poultry],
         phones: [
           addLeadingZero(people[SheetFields.PhoneMain]),
           addLeadingZero(people[SheetFields.Phone]),
@@ -88,17 +89,22 @@ async function syncSheetData(peoplesFromServer: People[]) {
         ],
         children: Number(people[SheetFields.Children]),
         gabaiCode: people[SheetFields.CodeGabay],
-        poultryNextMonth:  Number(people[SheetFields.poultryNextMonth]) || 0,
+        poultryNextMonth: Number(people[SheetFields.poultryNextMonth]) || 0,
       };
 
-      if (!_.isMatch(orgPeople!, peopleUpdate)){
-          console.log('update', peopleUpdate.id);
-          await repo.update(peopleUpdate.id, peopleUpdate);
-          updatedCount++;
-      };
+      if (!_.isMatch(orgPeople!, peopleUpdate)) {
+        console.log('update', peopleUpdate.id);
+        await repo.update(peopleUpdate.id, peopleUpdate);
+        return true;
+      }
+      return false;
     } catch (error) {
-      console.log(people.id, ': not updated');
+      console.log(people[SheetFields.Id], ': not updated');
+      return false;
     }
-  }
-  return {updatedCount, newCount};
+  });
+
+  const updatedCount = (await Promise.all(updatedPeoplePromises)).filter(Boolean).length;
+
+  return { updatedCount, newCount };
 }
