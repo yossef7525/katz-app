@@ -19,7 +19,7 @@ export const api = remultExpress({
     dataProvider: async () => {
         const client = new MongoClient('mongodb://localhost:27017')
         await client.connect()
-        return new MongoDataProvider(client.db('katz'), client)
+        return new MongoDataProvider(client.db('katz'), client, {disableTransactions: true})
     },
     entities: [People, Deliveries, Distributes, Archive, UserRoles, Comment],
     controllers: [DistributesController, SortedController, AuthController, PeopleController, CommentsController, SheetSyncController]
