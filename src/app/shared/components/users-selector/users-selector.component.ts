@@ -23,7 +23,7 @@ export class UsersSelectorComponent implements OnInit {
     this.isLoading = true
     this.users = await this.usersService.repo.find({
       orderBy: { lastName: 'asc' , firstName: 'asc'},
-      where: People.searchFilter(value) as any,
+      where: {$or: [{id: value}, {firstName: {$contains: value}}, {lastName: {$contains: value}}]},
       limit: 20
     })
     this.isLoading = false

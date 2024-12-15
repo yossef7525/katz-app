@@ -66,25 +66,6 @@ export class People {
     
     @Relations.toMany(() => Deliveries)
     deliveries?: Deliveries[]
-    static searchFilter(query: string) {
-            return {
-                $or: [
-                    {
-                        $expr: {
-                            $regexMatch: {
-                                input: { $concat: ["$lastName", " ", "$firstName"] }, // שם מלא
-                                regex: query,
-                                options: "i", // רגישות לאותיות קטנות/גדולות
-                            },
-                        },
-                    },
-                    {
-                        id: { $regex: query, $options: "i" }, // חיפוש לפי ID
-                    },
-                ],
-            };
-        ;
-    }
 }
 
 
