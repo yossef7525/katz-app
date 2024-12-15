@@ -1,7 +1,6 @@
 import { ArrayEntityDataProvider, Entity, EntityFilter, Fields, Filter, Relations, remult } from "remult";
 import { Deliveries } from "./deliverie";
 import { Roles } from "./roles";
-import { MongoDataProvider } from "remult/remult-mongo";
 
 @Entity("peoples", {
     allowApiCrud: Roles.User
