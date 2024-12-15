@@ -10,9 +10,17 @@ import { PeopleController } from '../shared/controllers/people.controller'
 import {Comment} from '../shared/types'
 import { CommentsController } from '../shared/controllers/comments.controller'
 import { SheetSyncController } from '../shared/controllers/sheet-sync.controller'
+import { MongoDataProvider } from "remult/remult-mongo"
+import { MongoClient } from 'mongodb'
+
 
 export const api = remultExpress({
     getUser: req => req.session!["user"],
+    dataProvider: async () => {
+        const client = new MongoClient('mongodb://localhost:27017')
+        await client.connect()
+        return new MongoDataProvider(client.db('katz'), client, {disableTransactions: true})
+    },
     entities: [People, Deliveries, Distributes, Archive, UserRoles, Comment],
     controllers: [DistributesController, SortedController, AuthController, PeopleController, CommentsController, SheetSyncController]
 })
