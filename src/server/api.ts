@@ -12,6 +12,8 @@ import { CommentsController } from '../shared/controllers/comments.controller'
 import { SheetSyncController } from '../shared/controllers/sheet-sync.controller'
 import { MongoDataProvider } from "remult/remult-mongo"
 import { MongoClient } from 'mongodb'
+import { remult } from 'remult'
+import { Roles } from '../shared/types/roles'
 
 
 export const api = remultExpress({
@@ -21,6 +23,7 @@ export const api = remultExpress({
         await client.connect()
         return new MongoDataProvider(client.db('katz'), client, {disableTransactions: true})
     },
+    admin: () => remult.isAllowed(Roles.DevOps),
     entities: [People, Deliveries, Distributes, Archive, UserRoles, Comment],
     controllers: [DistributesController, SortedController, AuthController, PeopleController, CommentsController, SheetSyncController]
 })
