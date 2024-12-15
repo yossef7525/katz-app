@@ -14,5 +14,6 @@ export enum SheetFields {
     Children = 'מספר ילדים לא נשואים',
     Poultry = 'מספר עופות',
     PoultrySub = 'כמות עופות להפחתה',
-    poultryNextMonth = 'הורדת חד פעמי החודש'
+    poultryNextMonth = 'הורדת חד פעמי החודש',
+    Cosher = 'עדיפות ראשונה'
 }

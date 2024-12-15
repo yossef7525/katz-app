@@ -56,6 +56,7 @@ async function syncSheetData(peoplesFromServer: People[]) {
         children: Number(people[SheetFields.Children]),
         gabaiCode: people[SheetFields.CodeGabay],
         poultryNextMonth: Number(people[SheetFields.poultryNextMonth]) || 0,
+        cosher: (people[SheetFields.Cosher] as string).replace(',', ''),
       };
       await repo.insert(peopleNew);
       return true;
@@ -90,6 +91,7 @@ async function syncSheetData(peoplesFromServer: People[]) {
         children: Number(people[SheetFields.Children]),
         gabaiCode: people[SheetFields.CodeGabay],
         poultryNextMonth: Number(people[SheetFields.poultryNextMonth]) || 0,
+        cosher: (people[SheetFields.Cosher] as string).replace(',', ''),
       };
 
       if (!_.isMatch(orgPeople!, peopleUpdate)) {
