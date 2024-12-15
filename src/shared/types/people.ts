@@ -1,6 +1,7 @@
-import { ArrayEntityDataProvider, Entity, Fields, Filter, Relations } from "remult";
+import { ArrayEntityDataProvider, Entity, EntityFilter, Fields, Filter, Relations, remult } from "remult";
 import { Deliveries } from "./deliverie";
 import { Roles } from "./roles";
+import { MongoDataProvider } from "remult/remult-mongo";
 
 @Entity("peoples", {
     allowApiCrud: Roles.User
@@ -65,13 +66,27 @@ export class People {
     
     @Relations.toMany(() => Deliveries)
     deliveries?: Deliveries[]
-    static userNameFilter = Filter.createCustom<People, {query:string}>(
-        async ({query}) => {
-        return ArrayEntityDataProvider.rawFilter((user:any) => {
-         return `${user.lastName} ${user.firstName}`.includes(query) || `${user.id}`.includes(query)
-        })
-      });
+    static searchFilter(query: string) {
+            return {
+                $or: [
+                    {
+                        $expr: {
+                            $regexMatch: {
+                                input: { $concat: ["$lastName", " ", "$firstName"] }, // שם מלא
+                                regex: query,
+                                options: "i", // רגישות לאותיות קטנות/גדולות
+                            },
+                        },
+                    },
+                    {
+                        id: { $regex: query, $options: "i" }, // חיפוש לפי ID
+                    },
+                ],
+            };
+        ;
+    }
 }
+
 
 
 export interface PeopleExcel extends People{
