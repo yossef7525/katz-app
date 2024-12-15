@@ -9,13 +9,14 @@ export class Deliveries {
     @Fields.cuid()
     id!:string
 
-    @Fields.string()
-    peopleId!: string;
-    
     @Relations.toOne(() => People, {
         field: "peopleId",
       })
     people?: People;
+    
+    @Fields.string()
+    peopleId!: string;
+    
 
     @Fields.string()
     distributeId!:string
