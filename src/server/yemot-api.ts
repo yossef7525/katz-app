@@ -2,6 +2,7 @@ import { Router } from "express";
 import {api} from './api';
 import { remult } from "remult";
 import { Deliveries, People, Statuses } from "../shared/types";
+import fs from 'fs/promises';
 
 const YemotRouts = Router();
 
@@ -162,7 +163,9 @@ async function sendNotification(shipping:Deliveries){
     const people = (await repo.find({where: {id: shipping.peopleId}}))[0]
     if(!shipping.count) return;
     try {
-        await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
+       const res = await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
+       const campaignId = (await res.json()).campaignId
+       fs.writeFile(`./logs/shippings.log`, `send notification to ${people.firstName} ${people.lastName} with phone ${people.phones[0]} at ${new Date()} campaignId: ${campaignId}\n`, {flag: 'a'})
     } catch (error) {
         console.log("error call to yemot!");
     }
