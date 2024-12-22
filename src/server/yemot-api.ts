@@ -3,6 +3,7 @@ import {api} from './api';
 import { remult } from "remult";
 import { Deliveries, People, Statuses } from "../shared/types";
 import fs from 'fs/promises';
+import { set } from "lodash";
 
 const YemotRouts = Router();
 
@@ -156,25 +157,57 @@ YemotRouts.post('/getYemotToken', async (req, res) => {
     res.send(resFromYemot.token)
 })
 
+let phonesToSendNotification: string[] = [];
+let isTimeoutExist = false;
 
-// הודעת מסירה
-async function sendNotification(shipping:Deliveries){
-    const repo = remult.repo(People)
-    const people = (await repo.find({where: {id: shipping.peopleId}}))[0]
-    if(!shipping.count) return;
-    try {
-       const res = await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
-       const resJson = await res.json()
-       if(!resJson.campaignId) {
-            console.log("error call to yemot!", resJson);
-          sendNotification(shipping)
+async function sendNotification(shipping: Deliveries) {
+    if (!shipping.count) return;
+
+    // שליפת פרטי האדם
+    const repo = remult.repo(People);
+    const people = (await repo.find({where: { id: shipping.peopleId }}))[0];
+    
+    if (!people || !people.phones || !people.phones.length) {
+        console.log(`No phone numbers found for shipping ID: ${shipping.peopleId}`);
         return;
-       }
-       console.log(resJson);
-       fs.writeFile(`shippings.log`, `send notification to ${people.firstName} ${people.lastName} with phone ${people.phones[0]} at ${new Date()} campaignId: ${resJson?.campaignId}\n`, {flag: 'a'})
-    } catch (error) {
-        console.log("error call to yemot!", error);
     }
+
+    // הוספת הטלפון לרשימת הודעות
+    phonesToSendNotification.push(people.phones[0]);
+
+    // אם טיימר כבר קיים, צא מהפונקציה
+    if (isTimeoutExist) return;
+
+    isTimeoutExist = true;
+
+    // טיימר לשליחת הודעות
+    setTimeout(async () => {
+        isTimeoutExist = false;
+        const phonesToSend = [...phonesToSendNotification]; // שכפול הרשימה
+        phonesToSendNotification = []; // איפוס הרשימה
+
+        try {
+            const response = await fetch(
+                `https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones=${phonesToSend.join(':')}`
+            );
+            const resJson = await response.json();
+
+            if (!resJson.campaignId) {
+                console.error('Error: Missing campaign ID', resJson);
+                phonesToSendNotification.push(...phonesToSend); // החזרת הטלפונים לרשימה
+                return;
+            }
+
+            console.log('Campaign sent successfully:', resJson);
+
+            // כתיבת לוג
+            const logMessage = `Sent notification to phones: ${phonesToSend.map(phone => `"${phone}"`).join(',')} at ${new Date()} campaignId: ${resJson?.campaignId}\n`;
+            await fs.appendFile('shippings.log', logMessage);
+        } catch (error) {
+            console.error('Error calling Yemot API:', error);
+            phonesToSendNotification.push(...phonesToSend); // החזרת הטלפונים לרשימה
+        }
+    }, 1000 * 60 * 5); // המתנה של 5 דקות
 }
 
 // הודעת ביטול
