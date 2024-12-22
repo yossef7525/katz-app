@@ -166,6 +166,7 @@ async function sendNotification(shipping:Deliveries){
        const res = await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
        const resJson = await res.json()
        if(!resJson.campaignId) {
+            console.log("error call to yemot!", resJson);
           sendNotification(shipping)
         return;
        }
