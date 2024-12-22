@@ -164,10 +164,11 @@ async function sendNotification(shipping:Deliveries){
     if(!shipping.count) return;
     try {
        const res = await fetch(`https://www.call2all.co.il/ym/api/RunCampaign?token=023137470:5386&templateId=37162&phones={"${people.phones[0]}":""}`)
-       const campaignId = (await res.json()).campaignId
-       fs.writeFile(`./logs/shippings.log`, `send notification to ${people.firstName} ${people.lastName} with phone ${people.phones[0]} at ${new Date()} campaignId: ${campaignId}\n`, {flag: 'a'})
+       const resJson = await res.json()
+       console.log(resJson);
+       fs.writeFile(`shippings.log`, `send notification to ${people.firstName} ${people.lastName} with phone ${people.phones[0]} at ${new Date()} campaignId: ${resJson?.campaignId}\n`, {flag: 'a'})
     } catch (error) {
-        console.log("error call to yemot!");
+        console.log("error call to yemot!", error);
     }
 }
 
