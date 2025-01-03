@@ -101,7 +101,7 @@ export class DeliveriesComponent {
       phone: people?.phones[0],
       phone2: people?.phones[1],
       phone3: people?.phones[2],
-      status: status[status.length - 1].status
+      status: status[0].status
     }));
     this.reportService.createExcelFile(heading, users, fileName, sheetName);
   }
