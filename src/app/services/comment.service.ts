@@ -10,7 +10,7 @@ export class CommentService {
     private repo = remult.repo(Comment)
     public comments = signal<Comment[]>([])
     async getComments(): Promise<Comment[]> {
-        const comments = await this.repo.find({ where: { isDeleted: false } });
+        const comments = await this.repo.find({ where: { $or: [{isDeleted: false},{isDeleted: undefined}] } });
         await this.peopleService.getPeoplesByIds(comments.map(c => c.peopleId || ''))
         this.comments.set(comments)
         return comments;
