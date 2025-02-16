@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Deliveries, People, Statuses } from '../../../shared/types';
 import { LiveQueryChangeInfo, remult } from 'remult';
+import { Fireworks } from 'fireworks-js';
 
 @Component({
   selector: 'app-counter',
@@ -16,10 +17,10 @@ export class CounterComponent implements OnInit {
 
   peopleRepo = remult.repo(People);
   deliveriesRepo = remult.repo(Deliveries);
-  firstLoaded:boolean = false
+  firstLoaded: boolean = false;
   async ngOnInit(): Promise<void> {
     this.deliveriesRepo
-      .liveQuery({ include: {people: true}, orderBy: { updatedAt: 'desc'},  })
+      .liveQuery({ include: { people: true }, orderBy: { updatedAt: 'desc' } })
       .subscribe((info: LiveQueryChangeInfo<Deliveries>) => {
         const deliveries = info.items.filter(
           (item) =>
@@ -30,6 +31,9 @@ export class CounterComponent implements OnInit {
           (a, b) => a + (b.count || 0) + 2,
           0
         );
+        if(this.poultryCounter > 0) {
+          this.startFireworks();
+        }
         this.deliveriesCounter = info.items.length - deliveries.length;
         this.peopleRepo
           .find({
@@ -42,12 +46,27 @@ export class CounterComponent implements OnInit {
             );
           });
         // this.lastDeliveries =  info.items[0] ;
-        const isDeliveried = info.items[0].status.findIndex(s => s.status === Statuses.Delivered) > -1
-        this.lastDeliveries = this.firstLoaded ? isDeliveried ?  info.items[0] : undefined : undefined;
-        this.firstLoaded = true
+        const isDeliveried =
+          info.items[0].status.findIndex(
+            (s) => s.status === Statuses.Delivered
+          ) > -1;
+        this.lastDeliveries = this.firstLoaded
+          ? isDeliveried
+            ? info.items[0]
+            : undefined
+          : undefined;
+        this.firstLoaded = true;
         setTimeout(() => {
           this.lastDeliveries = undefined;
         }, 5 * 1000);
       });
+  }
+
+  startFireworks() {
+    const container = document.querySelector('.fireworks') as Element;
+    const fireworks = new Fireworks(container, {
+      /* options */
+    });
+    fireworks.start();
   }
 }
